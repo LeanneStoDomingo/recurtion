@@ -37,15 +37,14 @@ const findNextDueDate = (date, interval) => {
     // finds a list of due dates that are on or before today 
     // and also includes the next due date as the last item
     let found = false;
-    const dates = rule.all(date => {
+    const dates = rule.all((date, i) => {
+        if (!i) return true;    // always include the first 2 dates in the list
         const prev = !found;
         found = date > Date.now();
         return prev;
     });
 
     const dueDate = dates[dates.length - 1];
-
-    console.log(`dueDate`, dueDate);
 
     return dueDate;
 }
