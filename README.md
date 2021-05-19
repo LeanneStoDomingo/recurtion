@@ -1,3 +1,3 @@
 # recurtion
 
-A Notion integration that automatically schedules recurring tasks
+A Notion integration that automatically updates recurring tasks
