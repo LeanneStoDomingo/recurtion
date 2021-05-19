@@ -1,0 +1,19 @@
+{
+  "name": "recurtion",
+  "version": "1.0.0",
+  "description": "A Notion integration that automatically schedules recurring tasks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeanneStoDomingo/recurtion.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeanneStoDomingo/recurtion/issues"
+  },
+  "homepage": "https://github.com/LeanneStoDomingo/recurtion#readme"
+}
