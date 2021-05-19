@@ -1,4 +1,5 @@
 const { Client } = require('@notionhq/client');
+const { RRule } = require('rrule');
 require('dotenv').config();
 
 // Initializing a client
@@ -22,9 +23,38 @@ const getRecurringTasks = async () => {
     });
 }
 
+const findNextDueDate = (date, interval) => {
+    const formatDate = date.split('-');
+
+    options = RRule.parseText(interval);
+
+    // js Date months are 0-11 instead of 1-12
+    // if date includes time, then the time needs to be cut off of the day
+    options.dtstart = new Date(Date.UTC(formatDate[0], parseInt(formatDate[1]) - 1, formatDate[2].substring(0, 2)));
+
+    const rule = new RRule(options);
+
+    // finds a list of due dates that are on or before today 
+    // and also includes the next due date as the last item
+    let found = false;
+    const dates = rule.all(date => {
+        const prev = !found;
+        found = date > Date.now();
+        return prev;
+    });
+
+    const dueDate = dates[dates.length - 1];
+
+    console.log(`dueDate`, dueDate);
+
+    return dueDate;
+}
+
 
 // Main function
 (async () => {
     const tasks = await getRecurringTasks();
-    console.log(tasks)
+    tasks.forEach(task => {
+        findNextDueDate(task.date, task.recurInterval);
+    })
 })()
