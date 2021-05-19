@@ -50,11 +50,28 @@ const findNextDueDate = (date, interval) => {
     return dueDate;
 }
 
+const updateTask = async (id, date) => {
+    await notion.pages.update({
+        page_id: id,
+        properties: {
+            Done: {
+                checkbox: false
+            },
+            'Due Date': {
+                date: {
+                    start: date
+                }
+            }
+        }
+    });
+}
+
 
 // Main function
 (async () => {
     const tasks = await getRecurringTasks();
     tasks.forEach(task => {
-        findNextDueDate(task.date, task.recurInterval);
+        const date = findNextDueDate(task.date, task.recurInterval);
+        updateTask(task.id, date);
     })
 })()
