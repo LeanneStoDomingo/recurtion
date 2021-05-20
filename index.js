@@ -9,6 +9,7 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const CHECKBOX = process.env.CHECKBOX;
 const DUE_DATE = process.env.DUE_DATE;
 const RECUR_INTERVAL = process.env.RECUR_INTERVAL;
+const INVALID = process.env.INVALID;
 
 const getRecurringTasks = async () => {
     const res = await notion.search();
@@ -36,26 +37,27 @@ const getRecurringTasks = async () => {
     return recurringTasks.map(task => {
         recurType = task.properties[RECUR_INTERVAL].type;
 
-        let recurInterval = '';
+        let interval = '';
         if (recurType === 'select') {
-            recurInterval = task.properties[RECUR_INTERVAL].select.name
+            interval = task.properties[RECUR_INTERVAL].select.name
         } else if (recurType === 'rich_text') {
-            recurInterval = task.properties[RECUR_INTERVAL].rich_text[0].plain_text
+            interval = task.properties[RECUR_INTERVAL].rich_text[0].plain_text
         }
 
         return {
             id: task.id,
             date: task.properties[DUE_DATE].date.start,
-            recurInterval: recurInterval
+            interval: interval,
+            type: recurType
         }
     });
 }
 
-const findNextDueDate = (id, date, interval) => {
+const findNextDueDate = ({ id, date, interval, type }) => {
     try {
         options = RRule.parseText(interval);
     } catch (error) {
-        updateInvalidInterval(id, interval);
+        updateInvalidInterval(id, interval, type);
         return null;
     }
 
@@ -84,18 +86,22 @@ const findNextDueDate = (id, date, interval) => {
     return dateTime.toString();
 }
 
-const updateInvalidInterval = async (id, interval) => {
+const updateInvalidInterval = async (id, interval, type) => {
     let payload = {}
 
     payload[CHECKBOX] = { checkbox: false }
 
     // checks if a warning has already been issued
-    if (!interval.includes('Invalid format')) {
-        payload[RECUR_INTERVAL] = {
-            rich_text: [{
-                text: { content: `Invalid format: ${interval}` },
-                plain_text: `Invalid format: ${interval}`
-            }]
+    if (!interval.includes(INVALID)) {
+        if (type === 'select') {
+            payload[RECUR_INTERVAL] = { select: { name: INVALID } }
+        } else if (type === 'rich_text') {
+            payload[RECUR_INTERVAL] = {
+                rich_text: [{
+                    text: { content: `${INVALID}: ${interval}` },
+                    plain_text: `${INVALID}: ${interval}`
+                }]
+            }
         }
     }
 
@@ -122,7 +128,7 @@ const updateTask = async (id, date) => {
 setInterval(async () => {
     const tasks = await getRecurringTasks();
     tasks.forEach(task => {
-        const date = findNextDueDate(task.id, task.date, task.recurInterval);
+        const date = findNextDueDate(task);
         if (date) updateTask(task.id, date);
     })
     console.log('Polling...')
