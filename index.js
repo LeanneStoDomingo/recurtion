@@ -24,13 +24,11 @@ const getRecurringTasks = async () => {
 }
 
 const findNextDueDate = (date, interval) => {
-    const formatDate = date.split('-');
-
     options = RRule.parseText(interval);
 
     // js Date months are 0-11 instead of 1-12
     // if date includes time, then the time needs to be cut off of the day
-    options.dtstart = new Date(Date.UTC(formatDate[0], parseInt(formatDate[1]) - 1, formatDate[2].substring(0, 2)));
+    options.dtstart = new Date(date);
 
     const rule = new RRule(options);
 
