@@ -3,23 +3,50 @@ const { RRule } = require('rrule');
 const { DateTime } = require("luxon");
 require('dotenv').config();
 
-// Initializing a client
-const notion = new Client({
-    auth: process.env.NOTION_TOKEN,
-});
+// initializes a client
+const notion = new Client({ auth: process.env.NOTION_TOKEN });
+
+const CHECKBOX = process.env.CHECKBOX;
+const DUE_DATE = process.env.DUE_DATE;
+const RECUR_INTERVAL = process.env.RECUR_INTERVAL;
 
 const getRecurringTasks = async () => {
     const res = await notion.search();
     const allTasks = res.results.filter(item => item.object === 'page');
     const recurringTasks = allTasks.filter(task => {
-        return task.properties.Done.checkbox && task.properties['Recur Interval'].rich_text.length !== 0;
+
+        // check if recur interval property exists
+        let recurType = '';
+        if (task.properties[RECUR_INTERVAL]) {
+            recurType = task.properties[RECUR_INTERVAL].type;
+        }
+
+        // chooses the correct interval to use
+        let recurring = false;
+        if (recurType === 'select') {
+            recurring = task.properties[RECUR_INTERVAL].select.name
+        } else if (recurType === 'rich_text') {
+            recurring = task.properties[RECUR_INTERVAL].rich_text.length
+        }
+
+        // the only tasks that should be modified have a recurring interval and is checked off
+        return recurring && task.properties[CHECKBOX].checkbox;
     });
 
     return recurringTasks.map(task => {
+        recurType = task.properties[RECUR_INTERVAL].type;
+
+        let recurInterval = '';
+        if (recurType === 'select') {
+            recurInterval = task.properties[RECUR_INTERVAL].select.name
+        } else if (recurType === 'rich_text') {
+            recurInterval = task.properties[RECUR_INTERVAL].rich_text[0].plain_text
+        }
+
         return {
             id: task.id,
-            date: task.properties['Due Date'].date.start,
-            recurInterval: task.properties['Recur Interval'].rich_text[0].plain_text
+            date: task.properties[DUE_DATE].date.start,
+            recurInterval: recurInterval
         }
     });
 }
@@ -58,23 +85,17 @@ const findNextDueDate = (id, date, interval) => {
 }
 
 const updateInvalidInterval = async (id, interval) => {
-    let payload = {
-        Done: {
-            checkbox: false
-        }
-    }
+    let payload = {}
+
+    payload[CHECKBOX] = { checkbox: false }
 
     // checks if a warning has already been issued
     if (!interval.includes('Invalid format')) {
-        payload['Recur Interval'] = {
-            rich_text: [
-                {
-                    text: {
-                        content: `Invalid format: ${interval}`
-                    },
-                    plain_text: `Invalid format: ${interval}`
-                }
-            ]
+        payload[RECUR_INTERVAL] = {
+            rich_text: [{
+                text: { content: `Invalid format: ${interval}` },
+                plain_text: `Invalid format: ${interval}`
+            }]
         }
     }
 
@@ -85,18 +106,14 @@ const updateInvalidInterval = async (id, interval) => {
 }
 
 const updateTask = async (id, date) => {
+    let payload = {}
+
+    payload[CHECKBOX] = { checkbox: false }
+    payload[DUE_DATE] = { date: { start: date } }
+
     await notion.pages.update({
         page_id: id,
-        properties: {
-            Done: {
-                checkbox: false
-            },
-            'Due Date': {
-                date: {
-                    start: date
-                }
-            }
-        }
+        properties: payload
     });
 }
 
