@@ -1,6 +1,7 @@
 const { Client } = require('@notionhq/client');
 const { RRule } = require('rrule');
 const { DateTime } = require("luxon");
+const http = require('http');
 require('dotenv').config();
 
 // initializes a client
@@ -134,3 +135,18 @@ setInterval(async () => {
     })
     console.log('Polling...')
 }, 1000);   // check every second
+
+
+// web server
+const PORT = process.env.PORT || 3000;
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end('ok');
+});
+server.listen(PORT);
+
+setInterval(() => {
+    http.get(process.env.ADDRESS);
+    console.log('pinging server...');
+}, 1000 * 60 * 4);      // pings every 4 minutes
