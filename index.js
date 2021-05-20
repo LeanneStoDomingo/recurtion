@@ -24,8 +24,13 @@ const getRecurringTasks = async () => {
     });
 }
 
-const findNextDueDate = (date, interval) => {
-    options = RRule.parseText(interval);
+const findNextDueDate = (id, date, interval) => {
+    try {
+        options = RRule.parseText(interval);
+    } catch (error) {
+        updateInvalidInterval(id, interval);
+        return null;
+    }
 
     // js Date months are 0-11 instead of 1-12
     // if date includes time, then the time needs to be cut off of the day
@@ -52,6 +57,33 @@ const findNextDueDate = (date, interval) => {
     return dateTime.toString();
 }
 
+const updateInvalidInterval = async (id, interval) => {
+    let payload = {
+        Done: {
+            checkbox: false
+        }
+    }
+
+    // checks if a warning has already been issued
+    if (!interval.includes('Invalid format')) {
+        payload['Recur Interval'] = {
+            rich_text: [
+                {
+                    text: {
+                        content: `Invalid format: ${interval}`
+                    },
+                    plain_text: `Invalid format: ${interval}`
+                }
+            ]
+        }
+    }
+
+    await notion.pages.update({
+        page_id: id,
+        properties: payload
+    });
+}
+
 const updateTask = async (id, date) => {
     await notion.pages.update({
         page_id: id,
@@ -73,8 +105,8 @@ const updateTask = async (id, date) => {
 setInterval(async () => {
     const tasks = await getRecurringTasks();
     tasks.forEach(task => {
-        const date = findNextDueDate(task.date, task.recurInterval);
-        updateTask(task.id, date);
+        const date = findNextDueDate(task.id, task.date, task.recurInterval);
+        if (date) updateTask(task.id, date);
     })
     console.log('Polling...')
 }, 1000);   // check every second
