@@ -70,10 +70,11 @@ const updateTask = async (id, date) => {
 
 
 // Main function
-(async () => {
+setInterval(async () => {
     const tasks = await getRecurringTasks();
     tasks.forEach(task => {
         const date = findNextDueDate(task.date, task.recurInterval);
         updateTask(task.id, date);
     })
-})()
+    console.log('Polling...')
+}, 1000);   // check every second
