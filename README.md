@@ -6,8 +6,8 @@ A Notion integration that adds recurring tasks
 
 ## Setup Integration
 
-- Option 1: Replit
-- Option 2 (advanced): self-hosted/VPS
+- **[Option 1: Replit](#option-1-replit)**
+- **[Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)**
 
 These steps were loosely based off of [An Idiot's Guide to hosting discord bots](https://anidiots.guide/hosting)
 
@@ -50,7 +50,8 @@ These steps were loosely based off of [An Idiot's Guide to hosting discord bots]
         - example: `https://recurtion.leannestodoming.repl.co`
       - option 2 : when you run your repl, a small browser should appear with the url on top ![repl url](images/repl_url.png)
 
-8. Click on the **Run** button at the top of the screen ![run button](images/run_btn.png)
+8. Click on the **Run** button at the top of the screen \
+![run button](images/run_btn.png)
 
 9. (Optional) If you want an even more reliable way to keep the program running 24/7, follow these [instructions](https://anidiots.guide/hosting/repl#the-automatic-ping).
 
