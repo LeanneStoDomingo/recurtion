@@ -30,8 +30,9 @@ const getRecurringTasks = async () => {
             recurring = task.properties[RECUR_INTERVAL].rich_text.length
         }
 
-        // the only tasks that should be modified have a recurring interval and is checked off
-        return recurring && task.properties[CHECKBOX].checkbox;
+        // the only tasks that should be modified have a 
+        // recurring interval, is checked off, and has a date
+        return recurring && task.properties[CHECKBOX].checkbox && task.properties[DUE_DATE];
     });
 
     return recurringTasks.map(task => {
