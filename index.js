@@ -45,7 +45,11 @@ const findNextDueDate = (date, interval) => {
 
     const dueDate = dates[dates.length - 1];
 
-    return dueDate;
+    // converts from UTC to original timezone
+    // timezone is taken from the last 6 characters of the date in ISO format
+    const dateTime = DateTime.fromISO(dueDate.toISOString()).setZone(`UTC${date.slice(-6)}`);
+
+    return dateTime.toString();
 }
 
 const updateTask = async (id, date) => {
