@@ -4,12 +4,12 @@ A Notion integration that adds recurring tasks
 
 Instructions can also be found [here](https://www.notion.so/Recurtion-Instructions-237146fda1174a9eb6d21e5724a668b4)
 
-**[Set Up Notion](#set-up-notion)**
+**[Set Up Notion](#set-up-notion)** \
+**[Set Up Integration](#set-up-integration)**
 
 - **[Option 1: Replit](#option-1-replit)**
 - **[Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)**
 
-**[Set Up Integration](#set-up-integration)** \
 **[How it Works / How to Use](#how-it-works--how-to-use)** \
 **[Limitations](#limitations)**
 
@@ -196,9 +196,17 @@ To preform this option, you should be comfortable with using the command line in
 - The integration will run every 1 second checking for recurring tasks that have been completed
 - The task will be unchecked and the date will be changed to the next due date based on the recur interval set by either the **Select** or **Text** property
 - When a rule that you have entered is invalid, the property will change
-  - If you are using a **Select** property, it'll change the selected option to a warning message
-  - If you are using a **Text** property, it'll append a warning to the beginning of the text
+  - If you are using a **Select** property, it'll change the selected option to the warning message. Example:
+    - `every other day`
+    - Will change to `Invalid format`
+    - A valid option would be `every 2 days`
+    - This is why one of the options that have to be in the **Select** property is an invalid indicator. The Notion API doesn't currently support adding a nonexistent option to a **Select** property
+  - If you are using a **Text** property, it'll append a warning to the beginning of the text. Example:
+    - `every single day`
+    - Will change to `Invalid format: every single day`
+    - A valid option would be `every day`
 - The warning that will be displayed when a rule is invalid comes from the **INVALID** value that you entered in either **Step 7** of [Option 1: Replit](#option-1-replit) or **Step 5** of [Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)
+  - The default warning message is `Invalid format`
 - You can check if your recur interval will work by visiting [this website](https://jakubroztocil.github.io/rrule/) and clicking on the **Text Input** tab
 - You can also play around with recur intervals on the **Options** tab and use them by copying from the **rule.toText()** row of the table on the right-hand side
 
