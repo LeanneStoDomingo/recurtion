@@ -1,6 +1,6 @@
 # recurtion
 
-A Notion integration that adds recurring tasks
+A bot that adds recurring tasks to Notion using the official API
 
 Instructions can also be found [here](https://www.notion.so/Recurtion-Instructions-237146fda1174a9eb6d21e5724a668b4)
 
