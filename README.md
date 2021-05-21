@@ -2,20 +2,55 @@
 
 A Notion integration that adds recurring tasks
 
-## Setup Notion
+Instructions can also be found [here](https://www.notion.so/Recurtion-Instructions-237146fda1174a9eb6d21e5724a668b4)
 
-## Setup Integration
+**[Set Up Notion](#set-up-notion)**
 
 - **[Option 1: Replit](#option-1-replit)**
 - **[Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)**
 
-These steps were loosely based off of [An Idiot's Guide to hosting discord bots](https://anidiots.guide/hosting)
+**[Set Up Integration](#set-up-integration)** \
+**[How it Works / How to Use](#how-it-works--how-to-use)** \
+**[Limitations](#limitations)**
+
+## Set Up Notion
+
+1. Create a table database for the integration to work with
+
+    - Option 1: duplicate this [template](https://www.notion.so/510ec0f4e4864a69a8f5158ab606ad3f)
+    - Option 2: create your own database that includes these properties:
+        - Checkbox - to indicate if a task has been completed
+        - Date - to show when the task should be completed
+        - Select or Text - the interval at which the task repeats
+          - If it's a Select property, you can include as many options as you like
+          - Must include an option for the interval to be invalid (see the template for an example)
+    - You can change the names of the properties (remember them for a later step)
+    - You can also add as many addition properties as you like since they won't affect how the integration works
+
+2. Go to your [Notion Integrations](https://www.notion.so/my-integrations)
+
+3. Click on **+ New integration**
+
+4. Name the integration, point it to the correct workspace, and click **Submit**
+
+5. You can access the *Internal Integration Token* by clicking **Show** and then **Copy** (you need this for a later step)
+
+6. Go back to the database and click on **Share** in the upper right-hand corner
+
+7. Invite the integration you just made by clicking on **Invite** and then the name that you wrote in **Step 4**
+
+## Set Up Integration
+
+- **[Option 1: Replit](#option-1-replit)**
+- **[Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)**
+
+These steps are loosely based on [An Idiot's Guide to hosting discord bots](https://anidiots.guide/hosting)
 
 ### Option 1: Replit
 
-1. Create a **[replit](https://replit.com/)** account
+1. Create a [replit](https://replit.com/) account
 
-2. Open the **[recurtion repl](https://replit.com/@LeanneStoDoming/recurtion)**
+2. Open the [recurtion repl](https://replit.com/@LeanneStoDoming/recurtion)
 
 3. Fork the repl ![fork button](images/fork_repl.png)
 
@@ -31,7 +66,7 @@ These steps were loosely based off of [An Idiot's Guide to hosting discord bots]
     "NOTION_TOKEN": "your-notion-token-here",
     "CHECKBOX": "Done",
     "DUE_DATE": "Due Date",
-    "RECUR_INTERVAL": "Recur Interval",
+    "RECUR_INTERVAL": "Recur Interval (select)",
     "INVALID": "Invalid format",
     "ADDRESS": "https://your-own-address-here.repl.co"
     }
@@ -40,11 +75,8 @@ These steps were loosely based off of [An Idiot's Guide to hosting discord bots]
     ![raw editor](images/secrets_editor.png)
 7. Replace each value with your own values and save
 
-    - NOTION_TOKEN : get from step __ of **Setup Notion**
-    - CHECKBOX : get from step __ of **Setup Notion**
-    - DUE_DATE : get from step __ of **Setup Notion**
-    - RECUR_INTERVAL : get from step __ of **Setup Notion**
-    - INVALID : get from step __ of **Setup Notion**
+    - NOTION_TOKEN : get from **Step 5** of **[Set Up Notion](#set-up-notion)**
+    - CHECKBOX, DUE_DATE, RECUR_INTERVAL, INVALID : get from **Step 1** of **[Set Up Notion](#set-up-notion)**
     - ADDRESS :
       - option 1 : `https://{name-of-repl}.{your-username}.repl.co`
         - example: `https://recurtion.leannestodoming.repl.co`
@@ -53,7 +85,7 @@ These steps were loosely based off of [An Idiot's Guide to hosting discord bots]
 8. Click on the **Run** button at the top of the screen \
 ![run button](images/run_btn.png)
 
-9. (Optional) If you want an even more reliable way to keep the program running 24/7, follow these [instructions](https://anidiots.guide/hosting/repl#the-automatic-ping).
+9. (Optional) If you want an even more reliable way to keep the program running 24/7, follow these [instructions](https://anidiots.guide/hosting/repl#the-automatic-ping)
 
 10. Enjoy recurring tasks in Notion!
 
@@ -94,7 +126,7 @@ To preform this option, you should be comfortable with using the command line in
     NOTION_TOKEN=your-notion-token-here
     CHECKBOX="Done"
     DUE_DATE="Due Date"
-    RECUR_INTERVAL="Recur Interval"
+    RECUR_INTERVAL="Recur Interval (select)"
     INVALID="Invalid format"
     PORT=3000
     ADDRESS=http://localhost:3000
@@ -102,11 +134,8 @@ To preform this option, you should be comfortable with using the command line in
 
 5. Replace each value with your own values
 
-    - NOTION_TOKEN : get from step __ of **Setup Notion**
-    - CHECKBOX : get from step __ of **Setup Notion**
-    - DUE_DATE : get from step __ of **Setup Notion**
-    - RECUR_INTERVAL : get from step __ of **Setup Notion**
-    - INVALID : get from step __ of **Setup Notion**
+    - NOTION_TOKEN : get from **Step 5** of **[Set Up Notion](#set-up-notion)**
+    - CHECKBOX, DUE_DATE, RECUR_INTERVAL, INVALID : get from **Step 1** of **[Set Up Notion](#set-up-notion)**
 
 6. Save and exit the text editor by pressing `ctrl+x`
     - nano will ask if you want to save the file, so press `y`
@@ -161,3 +190,23 @@ To preform this option, you should be comfortable with using the command line in
     ```
 
 12. Enjoy recurring tasks in Notion!
+
+## How it Works / How to Use
+
+- The integration will run every 1 second checking for recurring tasks that have been completed
+- The task will be unchecked and the date will be changed to the next due date based on the recur interval set by either the **Select** or **Text** property
+- When a rule that you have entered is invalid, the property will change
+  - If you are using a **Select** property, it'll change the selected option to a warning message
+  - If you are using a **Text** property, it'll append a warning to the beginning of the text
+- The warning that will be displayed when a rule is invalid comes from the **INVALID** value that you entered in either **Step 7** of [Option 1: Replit](#option-1-replit) or **Step 5** of [Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)
+- You can check if your recur interval will work by visiting [this website](https://jakubroztocil.github.io/rrule/) and clicking on the **Text Input** tab
+- You can also play around with recur intervals on the **Options** tab and use them by copying from the **rule.toText()** row of the table on the right-hand side
+
+## Limitations
+
+- The integration currently doesn't support a fixed number of recurrences
+  - An example of what isn't supported: `every day for 7 days`
+  - The integration will ignore the `7 days` part of the interval which means it won't stop after 7 days, it'll just continue
+- Also doesn't support exclusions
+  - Example: `every day exclude Mondays`
+  - Will ignore the `exclude Mondays` part
