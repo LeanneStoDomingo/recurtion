@@ -54,7 +54,7 @@ These steps are loosely based on [An Idiot's Guide to hosting discord bots](http
 
 3. Fork the repl ![fork button](images/fork_repl.png)
 
-4. Open the forked repl and go to the **Secrets** tab on the left hand side
+4. The forked repl should open. Go to the **Secrets** tab on the left hand side
 
 5. Click on **Open raw editor**\
 ![raw editor button](images/secrets_json.png)
