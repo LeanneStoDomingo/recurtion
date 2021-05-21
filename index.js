@@ -134,7 +134,7 @@ setInterval(async () => {
         if (date) updateTask(task.id, date);
     })
     console.log('Polling...')
-}, 1000);   // check every second
+}, 5000);   // check every 5 seconds
 
 
 // web server
@@ -149,4 +149,4 @@ server.listen(PORT);
 setInterval(() => {
     http.get(process.env.ADDRESS);
     console.log('pinging server...');
-}, 1000 * 60 * 4);      // pings every 4 minutes
+}, 240000);      // ping every 4 minutes

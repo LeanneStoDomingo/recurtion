@@ -193,7 +193,7 @@ To preform this option, you should be comfortable with using the command line in
 
 ## How it Works / How to Use
 
-- The integration will run every 1 second checking for recurring tasks that have been completed
+- The integration will run every 5 seconds checking for recurring tasks that have been completed
 - The task will be unchecked and the date will be changed to the next due date based on the recur interval set by either the **Select** or **Text** property
 - When a rule that you have entered is invalid, the property will change
   - If you are using a **Select** property, it'll change the selected option to the warning message. Example:
