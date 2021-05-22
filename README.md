@@ -26,6 +26,7 @@ At this time, there is no way to automatically update a forked repl
 ## Bugs
 
 - Fixed
+  - 5/22/2021: The web server pinging doesn't work for Replit because they use https instead of http which is what is currently used
   - 5/22/2021: There's a known bug where you have to include a time in the Date property for it to work correctly. If you include just the date itself it gives this error: "body failed validation. Fix one: body.properties.Due Date.date.id should be defined, instead was `undefined`. body.properties.Due Date.date.name should be defined, instead was `undefined`. body.properties.Due Date.date.start should be a valid ISO 8601 date string, instead was `"Invalid DateTime"`."
 
 ## Set Up Notion
