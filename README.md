@@ -14,6 +14,10 @@ Instructions can also be found [here](https://www.notion.so/Recurtion-Instructio
 **[Limitations](#limitations)** \
 **[Upcoming Improvements / Features / Ideas](#upcoming-improvements--features--ideas)**
 
+## Bugs
+
+- There's a known bug where you have to include a time in the Date property for it to work correctly. If you include just the date itself it gives this error: "body failed validation. Fix one: body.properties.Due Date.date.id should be defined, instead was `undefined`. body.properties.Due Date.date.name should be defined, instead was `undefined`. body.properties.Due Date.date.start should be a valid ISO 8601 date string, instead was `"Invalid DateTime"`."
+
 ## Set Up Notion
 
 1. Create a table database for the integration to work with
