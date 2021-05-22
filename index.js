@@ -2,6 +2,7 @@ const { Client } = require('@notionhq/client');
 const { RRule } = require('rrule');
 const { DateTime } = require("luxon");
 const http = require('http');
+const https = require('https');
 require('dotenv').config();
 
 // initializes a client
@@ -151,6 +152,6 @@ const server = http.createServer((req, res) => {
 server.listen(PORT);
 
 setInterval(() => {
-    http.get(process.env.ADDRESS);
+    https.get(process.env.ADDRESS);
     console.log('pinging server...');
 }, 240000);      // ping every 4 minutes
