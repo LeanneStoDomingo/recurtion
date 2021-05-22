@@ -7,11 +7,12 @@ Instructions can also be found [here](https://www.notion.so/Recurtion-Instructio
 **[Set Up Notion](#set-up-notion)** \
 **[Set Up Integration](#set-up-integration)**
 
-- **[Option 1: Replit](#option-1-replit)**
+- **[Option 1 (free): Replit](#option-1-free-replit)**
 - **[Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)**
 
 **[How it Works / How to Use](#how-it-works--how-to-use)** \
-**[Limitations](#limitations)**
+**[Limitations](#limitations)** \
+**[Upcoming Improvements / Features / Ideas](#upcoming-improvements--features--ideas)**
 
 ## Set Up Notion
 
@@ -46,7 +47,7 @@ Instructions can also be found [here](https://www.notion.so/Recurtion-Instructio
 
 These steps are loosely based on [An Idiot's Guide to hosting discord bots](https://anidiots.guide/hosting)
 
-### Option 1: Replit
+### Option 1 (free): Replit
 
 1. Create a [replit](https://replit.com/) account
 
@@ -205,7 +206,7 @@ To preform this option, you should be comfortable with using the command line in
     - `every single day`
     - Will change to `Invalid format: every single day`
     - A valid option would be `every day`
-- The warning that will be displayed when a rule is invalid comes from the **INVALID** value that you entered in either **Step 7** of [Option 1: Replit](#option-1-replit) or **Step 5** of [Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)
+- The warning that will be displayed when a rule is invalid comes from the **INVALID** value that you entered in either **Step 7** of **[Option 1: Replit](#option-1-replit)** or **Step 5** of **[Option 2 (advanced): self-hosted/VPS](#option-2-advanced-self-hostedvps)**
   - The default warning message is `Invalid format`
 - You can check if your recur interval will work by visiting [this website](https://jakubroztocil.github.io/rrule/) and clicking on the **Text Input** tab
 - You can also play around with recur intervals on the **Options** tab and use them by copying from the **rule.toText()** row of the table on the right-hand side
@@ -218,3 +219,12 @@ To preform this option, you should be comfortable with using the command line in
 - Also doesn't support exclusions
   - Example: `every day exclude Mondays`
   - Will ignore the `exclude Mondays` part
+
+## Upcoming Improvements / Features / Ideas
+
+- Fix the **[Limitations](#limitations)** mentioned above
+- Use OAuth and host a server that people can log in to to run the bot for them without them having to configure their own bot
+- Include instructions on how to use the bot on other host servers ([Glitch](https://glitch.com/), [Heroku](https://www.heroku.com/), etc.)
+- Track the amount of times a task has been complete (sort of a streak type thing and can be used for habit trackers)
+- Option to create new databse items instead of editing an item each time it's completed so there's a history of the tasks that have been done
+- Option to create a batch of recurring tasks in the future so the can be seen when planning tasks in advance
