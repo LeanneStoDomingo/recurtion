@@ -4,6 +4,8 @@ A bot that adds recurring tasks to Notion using the official API
 
 Instructions can also be found [here](https://www.notion.so/Recurtion-Instructions-237146fda1174a9eb6d21e5724a668b4)
 
+**[How to Update to Latest Version](#how-to-update-to-latest-version)** \
+**[Bugs](#bugs)** \
 **[Set Up Notion](#set-up-notion)** \
 **[Set Up Integration](#set-up-integration)**
 
@@ -14,9 +16,17 @@ Instructions can also be found [here](https://www.notion.so/Recurtion-Instructio
 **[Limitations](#limitations)** \
 **[Upcoming Improvements / Features / Ideas](#upcoming-improvements--features--ideas)**
 
+## How to Update to Latest Version
+
+At this time, there is no way to automatically update a forked repl
+
+- Option 1: delete your old repl and redo the steps below
+- Option 2: copy the contents of the file `index.js` from this repo and replace the `index.js` in your repl
+
 ## Bugs
 
-- There's a known bug where you have to include a time in the Date property for it to work correctly. If you include just the date itself it gives this error: "body failed validation. Fix one: body.properties.Due Date.date.id should be defined, instead was `undefined`. body.properties.Due Date.date.name should be defined, instead was `undefined`. body.properties.Due Date.date.start should be a valid ISO 8601 date string, instead was `"Invalid DateTime"`."
+- Fixed
+  - 5/22/2021: There's a known bug where you have to include a time in the Date property for it to work correctly. If you include just the date itself it gives this error: "body failed validation. Fix one: body.properties.Due Date.date.id should be defined, instead was `undefined`. body.properties.Due Date.date.name should be defined, instead was `undefined`. body.properties.Due Date.date.start should be a valid ISO 8601 date string, instead was `"Invalid DateTime"`."
 
 ## Set Up Notion
 

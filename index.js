@@ -50,12 +50,13 @@ const getRecurringTasks = async () => {
             id: task.id,
             date: task.properties[DUE_DATE].date.start,
             interval: interval,
-            type: recurType
+            type: recurType,
+            hasTime: task.properties[DUE_DATE].date.start.includes('T')
         }
     });
 }
 
-const findNextDueDate = ({ id, date, interval, type }) => {
+const findNextDueDate = ({ id, date, interval, type, hasTime }) => {
     try {
         options = RRule.parseText(interval);
     } catch (error) {
@@ -79,13 +80,16 @@ const findNextDueDate = ({ id, date, interval, type }) => {
         return prev;
     });
 
-    const dueDate = dates[dates.length - 1];
+    const dueDate = dates[dates.length - 1].toISOString();
 
-    // converts from UTC to original timezone
-    // timezone is taken from the last 6 characters of the date in ISO format
-    const dateTime = DateTime.fromISO(dueDate.toISOString()).setZone(`UTC${date.slice(-6)}`);
+    let dateTime = dueDate.slice(0, 10);;
+    if (hasTime) {
+        // converts from UTC to original timezone
+        // timezone is taken from the last 6 characters of the date in ISO format
+        dateTime = DateTime.fromISO(dueDate).setZone(`UTC${date.slice(-6)}`).toString();
+    }
 
-    return dateTime.toString();
+    return dateTime;
 }
 
 const updateInvalidInterval = async (id, interval, type) => {
