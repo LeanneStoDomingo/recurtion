@@ -133,6 +133,7 @@ const verifyTokens = async (req, res, next) => {
 
                 const tokens = user.generateTokens();
                 req.tokens = { id, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken };
+                console.log('refresh');
 
                 next();
             } catch (err) {
@@ -149,12 +150,11 @@ const verifyTokens = async (req, res, next) => {
 }
 
 app.get('/auth', verifyTokens, (req, res) => {
-    res.redirect(`https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.ADDRESS}${process.env.REDIRECT_URI}&response_type=code`);
+    const link = `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.ADDRESS}${process.env.REDIRECT_URI}&response_type=code`;
+    res.json({ link, ...req.tokens });
 });
 
-app.get(process.env.REDIRECT_URI, async (req, res) => {
-    res.send('Integrations');
-
+app.get(process.env.REDIRECT_URI, verifyTokens, async (req, res) => {
     if (!req.query.error) {
         const payload = {
             grant_type: "authorization_code",
@@ -169,13 +169,25 @@ app.get(process.env.REDIRECT_URI, async (req, res) => {
         }
 
         try {
-            const response = await axios.post('https://api.notion.com/v1/oauth/token', payload, { headers });
-            console.log(response.data);
+            const { data } = await axios.post('https://api.notion.com/v1/oauth/token', payload, { headers });
+            console.log(data);
+
+            const { id } = req.tokens;
+
+            await User.updateOne({ id }, {
+                accessToken: data.access_token,
+                workspaceName: data.workspace_name,
+                workspaceIcon: data.workspace_icon,
+            });
+
+            res.json(req.tokens);
         } catch (err) {
             console.error(err);
+            res.json({ error: err.message, ...req.tokens });
         }
     } else {
         console.log('access denied')
+        res.json({ error: 'access denied', ...req.tokens });
     }
 });
 
