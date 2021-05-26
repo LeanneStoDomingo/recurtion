@@ -97,20 +97,58 @@ app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (user && await bcrypt.compare(password, user.password)) {
-            if (user.validEmail) {
-                res.status(200).send(`User ${user} found`);
-            } else {
-                return res.status(400).send('Email has not been validated');
-            }
+            // create access and refresh tokens
+            const tokens = user.generateTokens();
+            res.status(200).json(tokens);
         } else {
-            return res.status(400).send('Incorrect username/password');
+            return res.status(400).send('Incorrect email/password');
         }
-    } catch {
-        return res.status(500).send('Something went wrong on the server');
+    } catch (err) {
+        if (err.message === 'unvalidated email') {
+            return res.status(400).send('Email has not been validated');
+        } else {
+            return res.status(500).send('Something went wrong on the server');
+        }
     }
 });
 
-app.get('/auth', (req, res) => {
+const verifyTokens = async (req, res, next) => {
+    const headers = req.headers;
+    const accessToken = req.tokens?.accessToken || headers.authorization?.split(' ')[1];
+    const refreshToken = req.tokens?.refreshToken || headers['refresh-token'];
+
+    let user;
+    try {
+        const { id } = jwt.decode(accessToken, process.env.ACCESS_TOKEN_SECRET);
+        user = await User.findById(id).exec();
+
+        jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+        req.tokens = { id, accessToken, refreshToken };
+
+        next();
+    } catch (err) {
+        if (err.message === 'jwt expired') {
+            try {
+                const { id } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET + user.password);
+
+                const tokens = user.generateTokens();
+                req.tokens = { id, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken };
+
+                next();
+            } catch (err) {
+                if (err.message === 'jwt expired') {
+                    res.status(400).send('Log back in');
+                } else {
+                    res.status(500).send('Something went wrong on the server');
+                }
+            }
+        } else {
+            res.status(500).send('Something went wrong on the server');
+        }
+    }
+}
+
+app.get('/auth', verifyTokens, (req, res) => {
     res.redirect(`https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.ADDRESS}${process.env.REDIRECT_URI}&response_type=code`);
 });
 
