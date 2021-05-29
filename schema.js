@@ -25,7 +25,7 @@ userSchema.methods.generateTokens = function () {
         const refreshToken = jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN_SECRET + this.password, { expiresIn: '7d' });
         return { accessToken, refreshToken };
     } else {
-        return new mongoose.Error('unvalidated email');
+        throw new mongoose.Error('unvalidated email');
     }
 }
 
