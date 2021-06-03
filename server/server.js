@@ -11,7 +11,6 @@ const authNotion = require('./routes/authNotion');
 
 const app = express();
 app.use(express.json());
-app.use('/', authNotion);
 
 app.get('/', (req, res) => {
     res.send('Recurtion');
@@ -113,6 +112,9 @@ app.post('/login', async (req, res) => {
         }
     }
 });
+
+
+app.use('/', authNotion);
 
 const PORT = process.env.PORT || 3000;
 
