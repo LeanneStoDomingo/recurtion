@@ -17,7 +17,7 @@ const verifyAccessToken = async (req, res, next) => {
         jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
         return next();
     } catch {
-        return res.status(400).json('Invalid token');
+        return res.json({ ok: false });
     }
 }
 
@@ -26,7 +26,7 @@ router.use(verifyAccessToken);
 
 router.get('/auth', (req, res) => {
     const link = `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.ADDRESS}${process.env.REDIRECT_URI}&response_type=code`;
-    res.json({ link, ...req.tokens });
+    res.json({ ok: true, link });
 });
 
 router.get(process.env.REDIRECT_URI, async (req, res) => {
@@ -45,24 +45,21 @@ router.get(process.env.REDIRECT_URI, async (req, res) => {
 
         try {
             const { data } = await axios.post('https://api.notion.com/v1/oauth/token', payload, { headers });
-            console.log(data);
 
             const { id } = req.tokens;
 
-            await User.updateOne({ id }, {
+            await User.updateOne({ _id: id }, {
                 accessToken: data.access_token,
                 workspaceName: data.workspace_name,
                 workspaceIcon: data.workspace_icon,
             });
 
-            res.json(req.tokens);
+            res.json({ ok: true, ...req.tokens });
         } catch (err) {
-            console.error(err);
-            res.json({ error: err.message, ...req.tokens });
+            res.json({ ok: false, message: err.message, ...req.tokens });
         }
     } else {
-        console.log('access denied')
-        res.json({ error: 'access denied', ...req.tokens });
+        res.json({ ok: false, message: 'access denied', ...req.tokens });
     }
 });
 
