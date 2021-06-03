@@ -33,8 +33,12 @@ userSchema.methods.generateTokens = function () {
 }
 
 userSchema.methods.verifyRefreshToken = function (token) {
-    const { id } = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET + this.password);
-    return id;
+    try {
+        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET + this.password);
+        return true;
+    } catch {
+        return false;
+    }
 }
 
 userSchema.methods.sendVerificationEmail = function () {

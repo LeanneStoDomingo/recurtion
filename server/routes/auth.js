@@ -69,7 +69,11 @@ router.post('/login', async (req, res) => {
         return res.json({ ok, message: 'Email has not been validated' });
     }
 
-    return res.json({ ok, ...tokens });
+    res.cookie('x-token', tokens.refreshToken, {
+        httpOnly: true
+    });
+
+    return res.json({ ok, accessToken: tokens.accessToken });
 });
 
 module.exports = router;
