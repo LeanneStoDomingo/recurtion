@@ -11,55 +11,52 @@ const User = require('../schema');
 const router = express.Router();
 
 const verifyAccessToken = async (req, res, next) => {
-    const accessToken = req.headers.authorization?.split(' ')[1];
+    const accessToken = req.query.token;
 
     try {
-        jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+        const { id } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+        req.id = id;
         return next();
     } catch {
-        return res.json({ ok: false });
+        return res.json({ ok: false, message: 'Invalid token' });
     }
 }
 
-
-router.use(verifyAccessToken);
-
-router.get('/auth', (req, res) => {
-    const link = `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.ADDRESS}${process.env.REDIRECT_URI}&response_type=code`;
-    res.json({ ok: true, link });
+router.get('/notion-oauth', verifyAccessToken, async (req, res) => {
+    const link = `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&state=${req.id}`;
+    return res.redirect(link);
 });
 
-router.get(process.env.REDIRECT_URI, async (req, res) => {
-    if (!req.query.error) {
-        const payload = {
-            grant_type: "authorization_code",
-            code: req.query.code,
-            redirect_uri: `${process.env.ADDRESS}${process.env.REDIRECT_URI}`
-        }
+router.get('/notion-oauth-redirect', async (req, res) => {
+    if (req.query.error) return res.json({ ok: false, message: req.query.error });
 
-        const token = Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`, 'utf8').toString('base64');
-        const headers = {
-            'Authorization': `Basic ${token}`,
-            'Content-Type': 'application/json'
-        }
+    const payload = {
+        grant_type: "authorization_code",
+        code: req.query.code,
+        redirect_uri: process.env.REDIRECT_URI
+    }
 
-        try {
-            const { data } = await axios.post('https://api.notion.com/v1/oauth/token', payload, { headers });
+    const token = Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`, 'utf8').toString('base64');
+    const headers = {
+        'Authorization': `Basic ${token}`,
+        'Content-Type': 'application/json'
+    }
 
-            const { id } = req.tokens;
+    try {
+        const { data } = await axios.post('https://api.notion.com/v1/oauth/token', payload, { headers });
 
-            await User.updateOne({ _id: id }, {
-                accessToken: data.access_token,
-                workspaceName: data.workspace_name,
-                workspaceIcon: data.workspace_icon,
-            });
+        console.log(`data`, data)
 
-            res.json({ ok: true, ...req.tokens });
-        } catch (err) {
-            res.json({ ok: false, message: err.message, ...req.tokens });
-        }
-    } else {
-        res.json({ ok: false, message: 'access denied', ...req.tokens });
+        await User.updateOne({ _id: req.query.state }, {
+            accessToken: data.access_token,
+            workspaceName: data.workspace_name,
+            workspaceIcon: data.workspace_icon,
+            botID: data.bot_id
+        });
+
+        return res.json({ ok: true, message: 'Successfully authorized Notion' });
+    } catch (err) {
+        return res.json({ ok: false, message: err.message });
     }
 });
 
