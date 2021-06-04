@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
@@ -12,6 +13,7 @@ const User = require('./schema');
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
