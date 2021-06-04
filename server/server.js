@@ -13,7 +13,11 @@ const User = require('./schema');
 
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: process.env.ORIGIN,
+    credentials: true,
+    exposedHeaders: ["set-cookie"]
+}));
 app.use(express.json());
 app.use(cookieParser());
 

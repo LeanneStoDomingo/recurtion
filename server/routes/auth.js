@@ -69,7 +69,9 @@ router.post('/login', async (req, res) => {
     }
 
     res.cookie('x-token', tokens.refreshToken, {
-        httpOnly: true
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
     });
 
     return res.json({ ok, accessToken: tokens.accessToken });
