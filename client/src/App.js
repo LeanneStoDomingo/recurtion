@@ -1,8 +1,12 @@
-import Login from "./pages/Login";
+import { Login, Signup, Dashboard } from './pages'
 
 const App = () => {
   return (
-    <Login />
+    <>
+      <Login />
+      <Signup />
+      <Dashboard />
+    </>
   );
 }
 

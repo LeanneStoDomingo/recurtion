@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import TokenContext from '../utils/TokenContext'
 
-const Login = () => {
+export const Login = () => {
     const { setToken } = useContext(TokenContext)
 
     const [email, setEmail] = useState('')
@@ -57,5 +57,3 @@ const Login = () => {
 
     )
 }
-
-export default Login
