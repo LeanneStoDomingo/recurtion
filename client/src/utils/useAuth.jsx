@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import jwtDecode from 'jwt-decode'
 import TokenContext from './TokenContext'
 import axios from 'axios'
+
+// IDEA: put checkExp into TokenContext instead
 
 const useAuth = () => {
     const { token, setToken } = useContext(TokenContext)
