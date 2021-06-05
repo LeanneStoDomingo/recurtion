@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useContext } from 'react'
 import TokenContext from '../utils/TokenContext'
 
@@ -8,9 +9,9 @@ export const Dashboard = () => {
         window.location.href = `http://localhost:5000/notion-oauth?token=${token}`
     }
 
-    const onLogout = () => {
+    const onLogout = async () => {
         setToken('')
-        // TODO: clear cookie on server
+        await axios.get('http://localhost:5000/logout', { withCredentials: true, credentials: 'include' })
     }
 
     return (

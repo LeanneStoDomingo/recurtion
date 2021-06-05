@@ -50,7 +50,9 @@ app.post('/refresh-tokens', async (req, res) => {
     const tokens = user.generateTokens();
 
     res.cookie('x-token', tokens.refreshToken, {
-        httpOnly: true
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
     });
 
     return res.json({ ok: true, accessToken: tokens.accessToken });

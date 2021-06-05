@@ -28,7 +28,7 @@ router.get('/notion-oauth', verifyAccessToken, async (req, res) => {
 });
 
 router.get('/notion-oauth-redirect', async (req, res) => {
-    if (req.query.error) return res.redirect(`http://localhost:3000/dashboard?success=false&error=${req.query.error}`);
+    if (req.query.error) return res.redirect(`http://localhost:3000/dashboard?ok=false&error=${req.query.error}`);
 
     const payload = {
         grant_type: "authorization_code",
@@ -52,9 +52,9 @@ router.get('/notion-oauth-redirect', async (req, res) => {
             botID: data.bot_id
         });
 
-        return res.redirect('http://localhost:3000/dashboard?success=true');
+        return res.redirect('http://localhost:3000/dashboard?ok=true');
     } catch (err) {
-        return res.redirect(`http://localhost:3000/dashboard?success=false&error=${err.message}`);
+        return res.redirect(`http://localhost:3000/dashboard?ok=false&error=${err.message}`);
     }
 });
 
