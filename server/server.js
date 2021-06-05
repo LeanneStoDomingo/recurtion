@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
     res.send('Recurtion');
 });
 
-app.post('/refresh-tokens', async (req, res) => {
+app.get('/refresh-tokens', async (req, res) => {
     const accessToken = req.headers.authorization?.split(' ')[1];
     const refreshToken = req.cookies['x-token'];
 
@@ -35,17 +35,13 @@ app.post('/refresh-tokens', async (req, res) => {
 
     const { id } = jwt.decode(accessToken, process.env.ACCESS_TOKEN_SECRET);
 
-    if (!id) {
-        return res.json({ ok: false, message: 'Invalid token' });
-    }
+    if (!id) return res.json({ ok: false, message: 'Invalid token' });
 
     const user = await User.findById(id).exec();
 
     const valid = user.verifyRefreshToken(refreshToken);
 
-    if (!valid) {
-        return res.json({ ok: false, message: 'Invalid token' });
-    }
+    if (!valid) return res.json({ ok: false, message: 'Invalid token' });
 
     const tokens = user.generateTokens();
 
