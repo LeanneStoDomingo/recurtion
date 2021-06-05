@@ -1,16 +1,22 @@
-import axios from 'axios'
 import React, { useContext } from 'react'
 import TokenContext from '../utils/TokenContext'
 
 export const Dashboard = () => {
-    const { token } = useContext(TokenContext)
+    const { token, setToken } = useContext(TokenContext)
 
-    const onClick = async () => {
-        await axios.get('http://localhost:5000/notion-oauth', { params: { token } })
+    const onClick = () => {
+        window.location.href = `http://localhost:5000/notion-oauth?token=${token}`
     }
 
+    const onLogout = () => {
+        setToken('')
+        // TODO: clear cookie on server
+    }
 
     return (
-        <button onClick={onClick}>Notin OAuth</button>
+        <>
+            <button onClick={onClick}>Notin OAuth</button>
+            <button onClick={onLogout}>Logout</button>
+        </>
     )
 }

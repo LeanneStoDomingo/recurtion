@@ -28,7 +28,7 @@ router.get('/notion-oauth', verifyAccessToken, async (req, res) => {
 });
 
 router.get('/notion-oauth-redirect', async (req, res) => {
-    if (req.query.error) return res.json({ ok: false, message: req.query.error });
+    if (req.query.error) return res.redirect(`http://localhost:3000/dashboard?success=false&error=${req.query.error}`);
 
     const payload = {
         grant_type: "authorization_code",
@@ -45,8 +45,6 @@ router.get('/notion-oauth-redirect', async (req, res) => {
     try {
         const { data } = await axios.post('https://api.notion.com/v1/oauth/token', payload, { headers });
 
-        console.log(`data`, data)
-
         await User.updateOne({ _id: req.query.state }, {
             accessToken: data.access_token,
             workspaceName: data.workspace_name,
@@ -54,9 +52,9 @@ router.get('/notion-oauth-redirect', async (req, res) => {
             botID: data.bot_id
         });
 
-        return res.json({ ok: true, message: 'Successfully authorized Notion' });
+        return res.redirect('http://localhost:3000/dashboard?success=true');
     } catch (err) {
-        return res.json({ ok: false, message: err.message });
+        return res.redirect(`http://localhost:3000/dashboard?success=false&error=${err.message}`);
     }
 });
 
