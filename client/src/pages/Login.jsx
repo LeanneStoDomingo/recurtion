@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import TokenContext from '../utils/TokenContext'
+import { Link } from 'react-router-dom'
 
 export const Login = () => {
     const { setToken } = useContext(TokenContext)
@@ -37,7 +38,7 @@ export const Login = () => {
 
     return (
         <form onSubmit={onSubmit}>
-            <div>{errorMessage}</div>
+            <div>Don't have an account? <Link to='/signup'>Sign Up</Link></div>
 
             <div>
                 <label>Email</label>
@@ -50,10 +51,12 @@ export const Login = () => {
             </div>
 
             <div>
-                <button>Forgot Password?</button>
-                <button type="submit">Login</button>
+                <Link to='/forgot-password'>Forgot Password?</Link>
+                <button type="submit">Log In</button>
             </div>
-        </form>
+
+            <div>{errorMessage}</div>
+        </form >
 
     )
 }

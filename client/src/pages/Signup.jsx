@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export const Signup = () => {
     const [email, setEmail] = useState('')
@@ -35,7 +36,7 @@ export const Signup = () => {
 
     return (
         <form onSubmit={onSubmit}>
-            <div>{message}</div>
+            <div>Already have an account? <Link to='/login'>Log In</Link></div>
 
             <div>
                 <label>Email</label>
@@ -52,7 +53,9 @@ export const Signup = () => {
                 <input type="password" onChange={updatePassword2} value={password2} />
             </div>
 
-            <button type="submit">Signup</button>
+            <button type="submit">Sign Up</button>
+
+            <div>{message}</div>
         </form>
     )
 }
