@@ -7,6 +7,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const auth = require('./routes/auth');
+const password = require('./routes/password');
 const authNotion = require('./routes/authNotion');
 
 const User = require('./schema');
@@ -55,6 +56,7 @@ app.get('/refresh-tokens', async (req, res) => {
 });
 
 app.use('/', auth);
+app.use('/', password);
 app.use('/', authNotion);
 
 const PORT = process.env.PORT || 5000;
