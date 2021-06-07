@@ -19,14 +19,14 @@ router.post('/signup', async (req, res) => {
     }
 
     const count = await User.countDocuments({ email });
-    if (count > 0) return res.status(400).send({ ok: false, message: 'Email already in use' });
+    if (count > 0) return res.send({ ok: false, message: 'Email already in use' });
 
     const hashedPassword = await bcrypt.hash(password1, 12);
     const user = new User({ email, password: hashedPassword });
 
     try {
-        await user.save();
-        await user.sendVerificationEmail();
+        const savedUser = await user.save();
+        await savedUser.sendVerificationEmail();
     } catch {
         return res.json({
             ok: false,
@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
         });
     }
 
-    return res.status(201).send({ ok: true, message: 'Verification email sent!' });
+    return res.send({ ok: true, message: 'Verification email sent!' });
 });
 
 router.get('/confirmation/:token', async (req, res) => {
@@ -42,15 +42,15 @@ router.get('/confirmation/:token', async (req, res) => {
 
     const { email } = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
 
-    if (!email) return res.json({ ok: false, message: 'Something went wrong!' });
+    if (!email) return res.redirect('http://localhost:3000/login?ok=false');
 
     try {
         await User.updateOne({ email }, { validEmail: true });
     } catch {
-        return res.json({ ok: false, message: 'Something went wrong!' });
+        return res.redirect('http://localhost:3000/login?ok=false');
     }
 
-    return res.json({ ok: true, message: 'Your email has been confirmed!' });
+    return res.redirect('http://localhost:3000/login?ok=true');
 });
 
 router.post('/login', async (req, res) => {

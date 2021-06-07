@@ -1,14 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import TokenContext from '../utils/TokenContext'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export const Login = () => {
     const { setToken } = useContext(TokenContext)
+    const location = useLocation()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [okMessage, setOkMessage] = useState('')
 
     const updateEmail = (e) => {
         setEmail(e.target.value)
@@ -36,8 +38,24 @@ export const Login = () => {
         setToken(data.accessToken)
     }
 
+    useEffect(() => {
+        const params = new URLSearchParams(location.search)
+        const ok = params.get('ok')
+        setOkMessage(() => {
+            if (ok === 'true') {
+                return 'Email was verified!'
+            } else if (ok === 'false') {
+                return 'Error: Email was not verified'
+            } else {
+                return ''
+            }
+        })
+    }, [])
+
     return (
         <form onSubmit={onSubmit}>
+            <div>{okMessage}</div>
+
             <div>Don't have an account? <Link to='/signup'>Sign Up</Link></div>
 
             <div>
