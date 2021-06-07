@@ -41,7 +41,7 @@ userSchema.methods.verifyRefreshToken = function (token) {
     }
 }
 
-userSchema.methods.sendVerificationEmail = function () {
+userSchema.methods.sendEmail = function (expiresIn, path, subject, action) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -50,20 +50,20 @@ userSchema.methods.sendVerificationEmail = function () {
         }
     });
 
-    const emailToken = jwt.sign({ email: this.email }, process.env.EMAIL_TOKEN_SECRET, { expiresIn: '1d' });
-    const link = `${process.env.ADDRESS}/confirmation/${emailToken}`;
+    const emailToken = jwt.sign({ email: this.email }, process.env.EMAIL_TOKEN_SECRET, { expiresIn });
+    const link = `${process.env.ADDRESS}${path}/${emailToken}`;
 
     var mailOptions = {
         from: process.env.GMAIL_USER,
         to: this.email,
-        subject: 'Recurtion - Verify Your Email Address',
+        subject,
         html: `
-        <h1>Hello from Recurtion!</h1>
-        <p>Click on this <a target="_blank" href="${link}">link</a> to verify your email address.
-        <br/><br/>
-        Raw url:<br/>
-        <a target="_blank" href="${link}">${link}</a>
-        </p>
+            <h1>Hello from Recurtion!</h1>
+            <p>Click on this <a target="_blank" href="${link}">link</a> to ${action}.
+            <br/><br/>
+            Raw url:<br/>
+            <a target="_blank" href="${link}">${link}</a>
+            </p>
         `
     };
 
