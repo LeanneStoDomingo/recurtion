@@ -1,9 +1,10 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const ForgotPassword = () => {
     const [email, setEmail] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    const [message, setMessage] = useState('')
 
     const updateEmail = (e) => {
         setEmail(e.target.value)
@@ -11,7 +12,16 @@ export const ForgotPassword = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        setErrorMessage('//TODO')
+
+        let data
+        try {
+            const res = await axios.post('http://localhost:5000/forgot-password', { email })
+            data = res.data
+        } catch (err) {
+            return setMessage(err.message)
+        }
+
+        return setMessage(data.message)
     }
 
     return (
@@ -25,7 +35,7 @@ export const ForgotPassword = () => {
 
             <button type="submit">Submit</button>
 
-            <div>{errorMessage}</div>
+            <div>{message}</div>
         </form>
     )
 }

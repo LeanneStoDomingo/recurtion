@@ -3,7 +3,7 @@ import {
     Switch,
     Route
 } from 'react-router-dom'
-import { Login, Signup, Dashboard, Home, ForgotPassword } from './pages'
+import { Login, Signup, Dashboard, Home, ForgotPassword, ResetPassword } from './pages'
 
 const App = () => {
     return (
@@ -14,6 +14,7 @@ const App = () => {
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={Signup} />
                 <Route exact path='/forgot-password' component={ForgotPassword} />
+                <Route exact path='/reset-password/:token' component={ResetPassword} />
             </Switch>
         </Router>
     );

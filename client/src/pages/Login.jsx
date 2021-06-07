@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import TokenContext from '../utils/TokenContext'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
 export const Login = () => {
     const { setToken } = useContext(TokenContext)
+    const history = useHistory()
     const location = useLocation()
 
     const [email, setEmail] = useState('')
@@ -36,6 +37,7 @@ export const Login = () => {
         }
 
         setToken(data.accessToken)
+        history.push('/dashboard')
     }
 
     useEffect(() => {
@@ -45,15 +47,20 @@ export const Login = () => {
             if (ok === 'true') {
                 return 'Email was verified!'
             } else if (ok === 'false') {
-                return 'Error: Email was not verified'
+                return 'Something went wrong!'
             } else {
                 return ''
             }
         })
-    }, [])
+    }, [location.search])
+
+    useEffect(() => {
+        console.log(`location.state`, location.state)
+    }, [location.state])
 
     return (
         <form onSubmit={onSubmit}>
+            <div>{location.state?.message}</div>
             <div>{okMessage}</div>
 
             <div>Don't have an account? <Link to='/signup'>Sign Up</Link></div>
