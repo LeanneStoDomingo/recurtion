@@ -19,15 +19,15 @@ export const Dashboard = () => {
     }
 
     const onLogout = async () => {
+        await axios.get('http://localhost:5000/logout', { headers: { Authorization: `Bearer ${token}` }, withCredentials: true, credentials: 'include' })
         setToken('')
-        await axios.get('http://localhost:5000/logout', { withCredentials: true, credentials: 'include' })
         history.push('/')
     }
 
     return (
         <>
             {errorMessage}
-            <button onClick={onClick}>Notin OAuth</button>
+            <button onClick={onClick}>Notion OAuth</button>
             <button onClick={onLogout}>Logout</button>
         </>
     )

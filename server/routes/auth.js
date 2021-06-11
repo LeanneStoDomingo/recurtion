@@ -74,8 +74,8 @@ router.post('/login', async (req, res) => {
     return res.json({ ok, accessToken: tokens.accessToken });
 });
 
-router.post('/logout', verifyAccessToken, (req, res) => {
-    return res.clearCookie('x-token').end();
+router.get('/logout', verifyAccessToken, (req, res) => {
+    return res.clearCookie('x-token').json({ ok: true });
 });
 
 
