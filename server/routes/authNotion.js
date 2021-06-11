@@ -1,26 +1,14 @@
 const express = require('express');
 const axios = require('axios');
-const jwt = require('jsonwebtoken');
 
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 const User = require('../schema');
+const { verifyAccessToken } = require('../utils');
 
 
 const router = express.Router();
-
-const verifyAccessToken = async (req, res, next) => {
-    const accessToken = req.query.token;
-
-    try {
-        const { id } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-        req.id = id;
-        return next();
-    } catch {
-        return res.json({ ok: false, message: 'Invalid token' });
-    }
-}
 
 router.get('/notion-oauth', verifyAccessToken, async (req, res) => {
     const link = `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&state=${req.id}`;

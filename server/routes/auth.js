@@ -6,6 +6,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 const User = require('../schema');
+const { verifyAccessToken } = require('../utils');
 
 const router = express.Router();
 
@@ -73,7 +74,7 @@ router.post('/login', async (req, res) => {
     return res.json({ ok, accessToken: tokens.accessToken });
 });
 
-router.get('/logout', (req, res) => {
+router.post('/logout', verifyAccessToken, (req, res) => {
     return res.clearCookie('x-token').end();
 });
 
