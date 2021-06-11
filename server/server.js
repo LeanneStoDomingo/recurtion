@@ -11,7 +11,7 @@ const password = require('./routes/password');
 const authNotion = require('./routes/authNotion');
 
 const User = require('./schema');
-const { verifyAccessToken } = require('../utils');
+const { verifyAccessToken } = require('./utils');
 
 const app = express();
 app.use(cors({
@@ -55,7 +55,7 @@ app.get('/refresh-tokens', async (req, res) => {
     return res.json({ ok: true, accessToken: tokens.accessToken });
 });
 
-app.post('/delete-account', verifyAccessToken, (req, res) => {
+app.post('/delete-account', verifyAccessToken, async (req, res) => {
     const { id } = req;
 
     if (!id) return res.json({ ok: false, message: 'Something went wrong!' });
