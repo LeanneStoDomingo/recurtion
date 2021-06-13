@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import TokenContext from '../utils/TokenContext'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export const Login = () => {
     const { setToken } = useContext(TokenContext)
-    const history = useHistory()
     const location = useLocation()
 
     const [email, setEmail] = useState('')
@@ -37,7 +36,6 @@ export const Login = () => {
         }
 
         setToken(data.accessToken)
-        history.push('/dashboard')
     }
 
     useEffect(() => {
@@ -53,10 +51,6 @@ export const Login = () => {
             }
         })
     }, [location.search])
-
-    useEffect(() => {
-        console.log(`location.state`, location.state)
-    }, [location.state])
 
     return (
         <form onSubmit={onSubmit}>

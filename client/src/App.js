@@ -4,17 +4,18 @@ import {
     Route
 } from 'react-router-dom'
 import { Login, Signup, Dashboard, Home, ForgotPassword, ResetPassword } from './pages'
+import { ProtectedRoute, RedirectRoute } from './utils';
 
 const App = () => {
     return (
         <Router>
             <Switch>
                 <Route exact path='/' component={Home} />
-                <Route exact path='/dashboard' component={Dashboard} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/signup' component={Signup} />
-                <Route exact path='/forgot-password' component={ForgotPassword} />
-                <Route exact path='/reset-password/:token' component={ResetPassword} />
+                <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+                <RedirectRoute exact path='/login' component={Login} />
+                <RedirectRoute exact path='/signup' component={Signup} />
+                <RedirectRoute exact path='/forgot-password' component={ForgotPassword} />
+                <ProtectedRoute exact path='/reset-password/:token' component={ResetPassword} />
             </Switch>
         </Router>
     );

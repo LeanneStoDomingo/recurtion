@@ -78,5 +78,9 @@ router.get('/logout', verifyAccessToken, (req, res) => {
     return res.clearCookie('x-token').json({ ok: true });
 });
 
+router.get('/verify-auth', verifyAccessToken, (req, res) => {
+    return res.json({ ok: true, message: 'Verified!' });
+});
+
 
 module.exports = router;
