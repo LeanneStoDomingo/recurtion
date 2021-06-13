@@ -12,7 +12,11 @@ const router = express.Router();
 
 router.get('/notion-oauth', verifyAccessToken, async (req, res) => {
     const link = `https://api.notion.com/v1/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&state=${req.id}`;
-    return res.redirect(link);
+    return res.cookie('x-a-token', req.accessToken, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
+    }).redirect(link);
 });
 
 router.get('/notion-oauth-redirect', async (req, res) => {
@@ -44,6 +48,20 @@ router.get('/notion-oauth-redirect', async (req, res) => {
     } catch (err) {
         return res.redirect(`http://localhost:3000/dashboard?ok=false&error=${err.message}`);
     }
+});
+
+router.get('/revoke-notion', verifyAccessToken, async (req, res) => {
+    try {
+        await User.updateOne({ _id: req.id }, {
+            accessToken: undefined,
+            workspaceName: undefined,
+            workspaceIcon: undefined,
+            botID: undefined
+        });
+    } catch {
+        return res.json({ ok: false, message: 'Something went wrong!' });
+    }
+    return res.json({ ok: true, message: 'Notion authorization revoked' });
 });
 
 module.exports = router;

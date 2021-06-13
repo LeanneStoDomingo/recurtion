@@ -6,11 +6,13 @@ import axios from 'axios'
 // IDEA: put checkExp into TokenContext instead
 
 
-const checkAuth = async (config) => {
+const checkAuth = async (setToken, config) => {
     try {
         const { data } = await axios.get('http://localhost:5000/verify-auth', config)
 
         if (!data.ok) return false
+
+        setToken(token => token || data.accessToken)
 
         return true
     } catch {
@@ -53,7 +55,7 @@ const useAuth = () => {
         (async () => {
             setLoading(true);
 
-            if (await checkAuth(config) || await checkExp(token, setToken, config)) {
+            if (await checkAuth(setToken, config) || await checkExp(token, setToken, config)) {
                 setIsAuth(true)
             } else {
                 setIsAuth(false)

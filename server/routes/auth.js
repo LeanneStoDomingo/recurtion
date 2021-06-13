@@ -79,7 +79,8 @@ router.get('/logout', verifyAccessToken, (req, res) => {
 });
 
 router.get('/verify-auth', verifyAccessToken, (req, res) => {
-    return res.json({ ok: true, message: 'Verified!' });
+    const accessToken = req.cookies['x-a-token'];
+    return res.clearCookie('x-a-token').json({ ok: true, message: 'Verified!', accessToken });
 });
 
 

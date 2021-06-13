@@ -7,7 +7,7 @@ import useAuth from '../utils/useAuth'
 export const Dashboard = () => {
     const history = useHistory()
     const { token, setToken } = useContext(TokenContext)
-    const { checkExp } = useAuth()
+    const { checkExp, isAuth, loading } = useAuth()
 
     const [errorMessage, setErrorMessage] = useState('')
     const [config] = useState({
@@ -19,8 +19,20 @@ export const Dashboard = () => {
     })
 
     const onClick = async () => {
-        if (await checkExp()) {
+        if (!loading && isAuth) {
             window.location.href = `http://localhost:5000/notion-oauth?token=${token}`
+        } else {
+            setErrorMessage('Token(s) aren\'t valid')
+        }
+    }
+
+    const onRevoke = async () => {
+        if (!loading && isAuth) {
+            const { data } = await axios.get('http://localhost:5000/revoke-notion', config)
+
+            if (!data.ok) return setErrorMessage(data.message || 'Couldn\'t reach server')
+
+            setErrorMessage(data.message)
         } else {
             setErrorMessage('Token(s) aren\'t valid')
         }
@@ -50,6 +62,7 @@ export const Dashboard = () => {
         <>
             {errorMessage}
             <button onClick={onClick}>Notion OAuth</button>
+            <button onClick={onRevoke}>Revoke Notion Authorization</button>
             <button onClick={onLogout}>Logout</button>
             <button onClick={onDelete}>Delete Account</button>
         </>
