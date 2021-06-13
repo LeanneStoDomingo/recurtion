@@ -5,10 +5,18 @@ import TokenContext from '../utils/TokenContext'
 import useAuth from '../utils/useAuth'
 
 export const Dashboard = () => {
+    const history = useHistory()
     const { token, setToken } = useContext(TokenContext)
     const { checkExp } = useAuth()
+
     const [errorMessage, setErrorMessage] = useState('')
-    const history = useHistory()
+    const [config] = useState({
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true,
+        credentials: 'include'
+    })
 
     const onClick = async () => {
         if (await checkExp()) {
@@ -19,9 +27,23 @@ export const Dashboard = () => {
     }
 
     const onLogout = async () => {
-        await axios.get('http://localhost:5000/logout', { headers: { Authorization: `Bearer ${token}` }, withCredentials: true, credentials: 'include' })
+        if (await checkExp()) {
+            await axios.get('http://localhost:5000/logout', config)
+        } else {
+            setErrorMessage('Token(s) aren\'t valid')
+        }
         setToken('')
         history.push('/')
+    }
+
+    const onDelete = async () => {
+        if (await checkExp()) {
+            await axios.get('http://localhost:5000/delete-account', config)
+            setToken('')
+            history.push('/')
+        } else {
+            setErrorMessage('Token(s) aren\'t valid')
+        }
     }
 
     return (
@@ -29,6 +51,7 @@ export const Dashboard = () => {
             {errorMessage}
             <button onClick={onClick}>Notion OAuth</button>
             <button onClick={onLogout}>Logout</button>
+            <button onClick={onDelete}>Delete Account</button>
         </>
     )
 }
