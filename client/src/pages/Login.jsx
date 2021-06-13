@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import TokenContext from '../utils/TokenContext'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
 export const Login = () => {
     const { setToken } = useContext(TokenContext)
     const location = useLocation()
+    const history = useHistory()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,7 +26,7 @@ export const Login = () => {
 
         let data
         try {
-            const res = await axios.post('http://localhost:5000/login', { email, password }, { withCredentials: true, credentials: 'include' })
+            const res = await axios.post('http://localhost:5000/login', { email, password })
             data = res.data
         } catch (err) {
             return setErrorMessage(err.message)
@@ -36,6 +37,7 @@ export const Login = () => {
         }
 
         setToken(data.accessToken)
+        history.push('/dashboard')
     }
 
     useEffect(() => {

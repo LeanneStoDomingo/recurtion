@@ -44,15 +44,15 @@ app.get('/refresh-tokens', async (req, res) => {
 
     if (!valid) return res.json({ ok: false, message: 'Invalid token' });
 
-    const tokens = user.generateTokens();
+    const { ok, tokens } = user.generateTokens();
 
-    res.cookie('x-token', tokens.refreshToken, {
+    if (!ok) return res.json({ ok: false, message: 'Something went wrong!' });
+
+    return res.cookie('x-token', tokens.refreshToken, {
         httpOnly: true,
         sameSite: 'none',
         secure: true
-    });
-
-    return res.json({ ok: true, accessToken: tokens.accessToken });
+    }).json({ ok: true, accessToken: tokens.accessToken });
 });
 
 app.post('/delete-account', verifyAccessToken, async (req, res) => {

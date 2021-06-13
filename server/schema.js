@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     workspaceName: String,
     workspaceIcon: String,
     botID: String,
+    checkbox: { type: String, default: 'Done' },
+    date: { type: String, default: 'Due Date' },
+    interval: { type: String, default: 'Recur Interval (text)' },
+    invalid: { type: String, default: 'Invalid format' },
     calendarKeys: [{ notion: String, google: String }]
 });
 
