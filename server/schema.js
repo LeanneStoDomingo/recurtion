@@ -80,4 +80,7 @@ userSchema.methods.sendEmail = function (expiresIn, path, subject, action) {
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+module.exports = {
+    User,
+    mongoose
+};

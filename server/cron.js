@@ -5,7 +5,7 @@ const { DateTime } = require("luxon");
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
 
-const User = require('./schema');
+const { User, mongoose } = require('./schema');
 
 const TYPES = {
     SELECT: 'select',
@@ -199,4 +199,5 @@ const updateUser = async (user) => {
 (async () => {
     const users = await User.find();
     await Promise.all(users.map(user => updateUser(user)).filter(user => user).flat());
+    await mongoose.disconnect();
 })();
