@@ -10,7 +10,7 @@ const auth = require('./routes/auth');
 const password = require('./routes/password');
 const authNotion = require('./routes/authNotion');
 
-const User = require('./schema');
+const { User } = require('./schema');
 const { verifyAccessToken } = require('./utils');
 
 const app = express();
