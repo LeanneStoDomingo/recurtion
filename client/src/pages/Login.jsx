@@ -4,7 +4,7 @@ import { TokenContext } from '../utils'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
 export const Login = () => {
-    const { setToken } = useContext(TokenContext)
+    const { setToken, config } = useContext(TokenContext)
     const location = useLocation()
     const history = useHistory()
 
@@ -26,7 +26,7 @@ export const Login = () => {
 
         let data
         try {
-            const res = await axios.post('http://localhost:5000/login', { email, password })
+            const res = await axios.post('http://localhost:5000/login', { email, password }, config)
             data = res.data
         } catch (err) {
             return setErrorMessage(err.message)

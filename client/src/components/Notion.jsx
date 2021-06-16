@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TokenContext, useAuth } from '../utils'
+import Switch from './Switch'
 
 const Notion = ({ setErrorMessage }) => {
     const { token, config } = useContext(TokenContext)
@@ -10,6 +11,7 @@ const Notion = ({ setErrorMessage }) => {
     const [date, setDate] = useState('')
     const [recurInterval, setRecurInterval] = useState('')
     const [invalid, setInvalid] = useState('')
+    const [firstToggle, setFirstToggle] = useState(false)
 
     const onClick = async () => {
         if (!loading && isAuth) {
@@ -27,6 +29,16 @@ const Notion = ({ setErrorMessage }) => {
             if (!data.ok) return setErrorMessage(data.message || 'Couldn\'t reach server')
 
             setErrorMessage(data.message)
+        } else {
+            setErrorMessage('Token(s) aren\'t valid')
+        }
+    }
+
+    const onToggle = async (toggle) => {
+        const check = await checkExp()
+        if (check) {
+            const { data } = await axios.post('http://localhost:5000/toggle-integration', { toggle }, config)
+            if (!data.ok) return setErrorMessage(data.message || 'Couldn\'t reach server')
         } else {
             setErrorMessage('Token(s) aren\'t valid')
         }
@@ -65,10 +77,21 @@ const Notion = ({ setErrorMessage }) => {
             setErrorMessage(data.message || 'Could not reach server')
         }
     }
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await axios.get('http://localhost:5000/dashboard-info', config)
+            setFirstToggle(data.recurIntegration)
+        })()
+    }, [config])
+
+
     return (
         <div>
             <button onClick={onClick}>Notion OAuth</button>
             <button onClick={onRevoke}>Revoke Notion Authorization</button>
+
+            <Switch onToggle={onToggle} firstState={firstToggle} />
 
             <form onSubmit={onSubmit}>
 

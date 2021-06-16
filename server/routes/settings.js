@@ -35,13 +35,11 @@ router.get('/dashboard-info', async (req, res) => {
     }
 });
 
-router.get('/toggle-integration', async (req, res) => {
+router.post('/toggle-integration', async (req, res) => {
     try {
         const user = await User.findById(req.id).exec();
 
-        const toggle = user.recurIntegration;
-        user.recurIntegration = !toggle;
-
+        user.recurIntegration = req.body.toggle;
         await user.save();
 
         return res.json({ ok: true, message: 'Setting toggled!' });
