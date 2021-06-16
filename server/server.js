@@ -9,6 +9,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const auth = require('./routes/auth');
 const password = require('./routes/password');
 const authNotion = require('./routes/authNotion');
+const settings = require('./routes/settings');
 
 const { User } = require('./schema');
 const { verifyAccessToken } = require('./utils');
@@ -55,7 +56,7 @@ app.get('/refresh-tokens', async (req, res) => {
     }).json({ ok: true, accessToken: tokens.accessToken });
 });
 
-app.post('/delete-account', verifyAccessToken, async (req, res) => {
+app.get('/delete-account', verifyAccessToken, async (req, res) => {
     const { id } = req;
 
     if (!id) return res.json({ ok: false, message: 'Something went wrong!' });
@@ -72,6 +73,7 @@ app.post('/delete-account', verifyAccessToken, async (req, res) => {
 app.use('/', auth);
 app.use('/', password);
 app.use('/', authNotion);
+app.use('/', settings);
 
 const PORT = process.env.PORT || 5000;
 

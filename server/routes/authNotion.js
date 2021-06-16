@@ -64,23 +64,4 @@ router.get('/revoke-notion', verifyAccessToken, async (req, res) => {
     return res.json({ ok: true, message: 'Notion authorization revoked' });
 });
 
-router.post('/set-configuration', verifyAccessToken, async (req, res) => {
-    const { checkbox, date, interval, invalid } = req.body
-
-    if (!checkbox || !date || !interval || !invalid) return res.json({ ok: false, message: 'Incomplete' });
-
-    try {
-        await User.updateOne({ _id: req.id }, {
-            checkbox,
-            date,
-            interval,
-            invalid
-        });
-    } catch {
-        return res.json({ ok: false, message: 'Something went wrong!' });
-    }
-
-    return res.json({ ok: true, message: 'Successfully saved!' });
-});
-
 module.exports = router;
