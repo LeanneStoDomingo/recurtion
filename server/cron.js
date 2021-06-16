@@ -198,6 +198,6 @@ const updateUser = async (user) => {
 // Main function
 (async () => {
     const users = await User.find();
-    await Promise.all(users.map(user => updateUser(user)).filter(user => user).flat());
     await mongoose.disconnect();
+    await Promise.all(users.map(user => updateUser(user)).filter(user => user).flat());
 })();
