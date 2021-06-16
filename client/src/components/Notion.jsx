@@ -7,6 +7,8 @@ const Notion = ({ setErrorMessage }) => {
     const { token, config } = useContext(TokenContext)
     const { loading, isAuth, checkExp } = useAuth()
 
+    const [workspaceName, setWorkspaceName] = useState('')
+    const [workspaceIcon, setWorkspaceIcon] = useState('')
     const [checkbox, setCheckbox] = useState('')
     const [date, setDate] = useState('')
     const [recurInterval, setRecurInterval] = useState('')
@@ -81,9 +83,19 @@ const Notion = ({ setErrorMessage }) => {
     useEffect(() => {
         (async () => {
             const { data } = await axios.get('http://localhost:5000/dashboard-info', config)
+            // checkbox, date, interval, invalid, workspaceName, workspaceIcon, recurIntegration
+
+            if (!data.ok) return setErrorMessage(data.message)
+
+            setWorkspaceName(data.workspaceName)
+            setWorkspaceIcon(data.workspaceIcon)
+            setCheckbox(data.checkbox)
+            setDate(data.date)
+            setRecurInterval(data.interval)
+            setInvalid(data.invalid)
             setFirstToggle(data.recurIntegration)
         })()
-    }, [config])
+    }, [config, setErrorMessage])
 
 
     return (
@@ -92,6 +104,9 @@ const Notion = ({ setErrorMessage }) => {
             <button onClick={onRevoke}>Revoke Notion Authorization</button>
 
             <Switch onToggle={onToggle} firstState={firstToggle} />
+
+            {workspaceIcon}
+            {workspaceName}
 
             <form onSubmit={onSubmit}>
 
