@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
-import TokenContext from './TokenContext'
 import axios from 'axios'
+import { TokenContext } from '.'
 
-const useAuth = () => {
+export const useAuth = () => {
     const { token, setToken, config } = useContext(TokenContext)
     const [loading, setLoading] = useState(true)
     const [isAuth, setIsAuth] = useState(false)
@@ -64,5 +64,3 @@ const useAuth = () => {
 
     return { checkExp, checkAuth, isAuth, loading, checkBoth }
 }
-
-export default useAuth

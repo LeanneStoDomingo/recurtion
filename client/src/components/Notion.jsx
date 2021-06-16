@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
-import TokenContext from '../utils/TokenContext'
-import useAuth from '../utils/useAuth'
+import { TokenContext, useAuth } from '../utils'
 
 const Notion = ({ setErrorMessage }) => {
     const { token, config } = useContext(TokenContext)

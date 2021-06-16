@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
-import TokenContext from '../utils/TokenContext'
-import useAuth from '../utils/useAuth'
+import { TokenContext, useAuth } from '../utils'
 import Notion from '../components/Notion'
 
 export const Dashboard = () => {

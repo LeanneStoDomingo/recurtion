@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import TokenContext from '../utils/TokenContext'
+import { TokenContext } from '../utils'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
 export const Login = () => {
