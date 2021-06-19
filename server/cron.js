@@ -180,7 +180,7 @@ const updateTask = (notion, id, date, checkboxName, dateName) => {
 }
 
 const updateUser = async (user) => {
-    if (!user.accessToken) return null;
+    if (!user.accessToken || !user.recurIntegration) return null;
 
     const notion = new Client({ auth: user.accessToken });
 
