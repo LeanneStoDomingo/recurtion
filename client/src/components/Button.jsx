@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 const classNameColors = {
     primary: 'bg-purple-600 text-purple-50 shadow-sm hover:shadow-md hover:bg-purple-700 focus-visible:ring focus-visible:ring-purple-400 focus-visible:ring-opacity-75',
     secondary: 'bg-purple-100 text-purple-700 border border-purple-200 shadow-sm hover:shadow hover:bg-purple-200 hover:border-purple-300 focus-visible:ring focus-visible:ring-purple-400 focus-visible:ring-opacity-75',
-    noneDark: 'text-purple-700 focus-visible:outline-white hover:underline',
+    noneDark: 'text-purple-700 focus-visible:outline-black hover:underline',
     noneLight: 'text-purple-50 focus-visible:outline-white hover:underline'
 }
 

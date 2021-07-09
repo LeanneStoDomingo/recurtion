@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { TokenContext } from '../utils'
 import { Link, useHistory, useLocation } from 'react-router-dom'
+import Button from '../components/Button'
+import Input from '../components/Input'
+import Name from '../components/Name'
 
 export const Login = () => {
     const { setToken, config } = useContext(TokenContext)
@@ -12,14 +15,6 @@ export const Login = () => {
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [okMessage, setOkMessage] = useState('')
-
-    const updateEmail = (e) => {
-        setEmail(e.target.value)
-    }
-
-    const updatePassword = (e) => {
-        setPassword(e.target.value)
-    }
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -55,29 +50,23 @@ export const Login = () => {
     }, [location.search])
 
     return (
-        <form onSubmit={onSubmit}>
-            <div>{location.state?.message}</div>
-            <div>{okMessage}</div>
-
-            <div>Don't have an account? <Link to='/signup'>Sign Up</Link></div>
-
-            <div>
-                <label>Email</label>
-                <input type="email" onChange={updateEmail} value={email} />
+        <div className='bg-purple-600 min-h-screen flex flex-col items-center'>
+            <Name className='my-16' />
+            <div className='bg-purple-50 rounded-2xl shadow-lg p-5'>
+                <form onSubmit={onSubmit} className='flex flex-col'>
+                    <div>{location.state?.message}</div>
+                    <div>{okMessage}</div>
+                    <div className='text-center'>Don't have an account? <Link to='/signup' className='text-purple-700 focus-visible:outline-white hover:underline'>Sign Up</Link></div>
+                    <Input label='Email' type='email' update={setEmail} value={email} className='mt-5' />
+                    <Input label='Password' type='password' update={setPassword} value={password} className='mt-3' />
+                    <div className='flex justify-between mt-5'>
+                        <Button to='/forgot-password' text='Forgot Password?' color='noneDark' />
+                        <Button type="submit" text='Log In' />
+                    </div>
+                    <div>{errorMessage}</div>
+                </form>
             </div>
-
-            <div>
-                <label>Password</label>
-                <input type="password" onChange={updatePassword} value={password} />
-            </div>
-
-            <div>
-                <Link to='/forgot-password'>Forgot Password?</Link>
-                <button type="submit">Log In</button>
-            </div>
-
-            <div>{errorMessage}</div>
-        </form >
+        </div>
 
     )
 }
