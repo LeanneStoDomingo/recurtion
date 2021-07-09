@@ -50,7 +50,7 @@ export const Login = () => {
     }, [location.search])
 
     return (
-        <div className='bg-purple-600 min-h-screen flex flex-col items-center'>
+        <div className='bg-purple-600 min-h-screen flex flex-col items-center mobile-height'>
             <Name className='my-16' />
             <div className='bg-purple-50 rounded-2xl shadow-lg p-5'>
                 <form onSubmit={onSubmit} className='flex flex-col'>

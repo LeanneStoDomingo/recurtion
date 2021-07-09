@@ -16,3 +16,9 @@
         @apply font-normal;
     }
 }
+
+@layer utilities {
+    .mobile-height {
+        min-height: -webkit-fill-available;
+    }
+}
