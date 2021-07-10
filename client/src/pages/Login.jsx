@@ -54,6 +54,7 @@ export const Login = () => {
             <Name className='my-16' />
             <div className='bg-purple-50 rounded-2xl shadow-lg p-5'>
                 <form onSubmit={onSubmit} className='flex flex-col'>
+                    <h2 className='text-center text-xl font-semibold text-purple-900 mb-3'>Log In</h2>
                     <div>{location.state?.message}</div>
                     <div>{okMessage}</div>
                     <div className='text-center'>Don't have an account? <Link to='/signup' className='text-purple-700 focus-visible:outline-white hover:underline'>Sign Up</Link></div>
