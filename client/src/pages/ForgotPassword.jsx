@@ -1,14 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Input from '../components/Input'
+import Button from '../components/Button'
+import ChevronLeft from '../icons/ChevronLeft'
+import Name from '../components/Name'
 
 export const ForgotPassword = () => {
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
-
-    const updateEmail = (e) => {
-        setEmail(e.target.value)
-    }
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -25,17 +24,23 @@ export const ForgotPassword = () => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
-            <Link to='/login'>Back</Link>
+        <div className='bg-purple-600 min-h-screen flex flex-col items-center mobile-height'>
+            <Name className='my-16' />
+            <div className='bg-purple-50 rounded-2xl shadow-lg p-5 mb-16'>
+                <form onSubmit={onSubmit} className='flex flex-col'>
 
-            <div>
-                <label>Email</label>
-                <input type="email" onChange={updateEmail} value={email} />
+                    <h2 className='text-center text-xl font-semibold text-purple-900'>Forgot Password</h2>
+
+                    <Input label='Email' type='email' update={setEmail} value={email} className='my-8' />
+
+                    <div className='flex justify-between'>
+                        <Button to='/login' text='Back' icon={<ChevronLeft />} color='secondary' size='small' />
+                        <Button type='submit' text='Submit' />
+                    </div>
+
+                    <div>{message}</div>
+                </form>
             </div>
-
-            <button type="submit">Submit</button>
-
-            <div>{message}</div>
-        </form>
+        </div>
     )
 }

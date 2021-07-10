@@ -8,7 +8,17 @@ const classNameColors = {
     noneLight: 'text-purple-50 focus-visible:outline-white hover:underline'
 }
 
-const Button = ({ text, icon, to, href, onClick, className = '', color = 'primary', ...props }) => {
+const classNameIconSizes = {
+    medium: 'w-10 h-10',
+    small: 'w-5 h-5'
+}
+
+const classNameSizes = {
+    medium: 'px-4',
+    small: 'pl-2 pr-4'
+}
+
+const Button = ({ text, icon, to, href, onClick, className = '', color = 'primary', size = 'medium', ...props }) => {
     const history = useHistory()
 
     const onClickLink = () => {
@@ -23,9 +33,9 @@ const Button = ({ text, icon, to, href, onClick, className = '', color = 'primar
         <button
             {...props}
             onClick={to ? onClickLink : href ? onClickHref : onClick}
-            className={`flex ${classNameColors[color]} items-center justify-center font-medium rounded py-2 px-4 text-center ${className}`}
+            className={`flex ${classNameColors[color]} items-center justify-center align-middle font-medium rounded py-2 ${classNameSizes[size]} text-center ${className}`}
         >
-            <div className={icon ? 'w-10 h-10 mr-3' : ''}>
+            <div className={icon ? `${classNameIconSizes[size]} mr-3` : ''}>
                 {icon}
             </div>
             <div>
