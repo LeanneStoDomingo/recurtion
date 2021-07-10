@@ -57,7 +57,7 @@ export const Login = () => {
                     <h2 className='text-center text-xl font-semibold text-purple-900 mb-3'>Log In</h2>
                     <div>{location.state?.message}</div>
                     <div>{okMessage}</div>
-                    <div className='text-center'>Don't have an account? <Link to='/signup' className='text-purple-700 focus-visible:outline-white hover:underline'>Sign Up</Link></div>
+                    <div className='text-center'>Don't have an account? <Link to='/signup' className='text-purple-700 focus-visible:outline-black hover:underline'>Sign Up</Link></div>
                     <Input label='Email' type='email' update={setEmail} value={email} className='mt-5' />
                     <Input label='Password' type='password' update={setPassword} value={password} className='mt-3' />
                     <div className='flex justify-between mt-5'>
