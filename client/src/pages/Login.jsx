@@ -61,8 +61,8 @@ export const Login = () => {
                     <Input label='Email' type='email' update={setEmail} value={email} className='mt-5' />
                     <Input label='Password' type='password' update={setPassword} value={password} className='mt-3' />
                     <div className='flex justify-between mt-5'>
+                        <Button type="submit" text='Log In' className='order-last' />
                         <Button to='/forgot-password' text='Forgot Password?' color='noneDark' />
-                        <Button type="submit" text='Log In' />
                     </div>
                     <div>{errorMessage}</div>
                 </form>

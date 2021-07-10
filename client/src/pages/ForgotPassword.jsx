@@ -34,8 +34,8 @@ export const ForgotPassword = () => {
                     <Input label='Email' type='email' update={setEmail} value={email} className='my-8' />
 
                     <div className='flex justify-between'>
+                        <Button type='submit' text='Submit' className='order-last' />
                         <Button to='/login' text='Back' icon={<ChevronLeft />} color='secondary' size='small' />
-                        <Button type='submit' text='Submit' />
                     </div>
 
                     <div>{message}</div>
