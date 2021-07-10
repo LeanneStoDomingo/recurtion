@@ -15,7 +15,7 @@ const App = () => {
                 <RedirectRoute exact path='/login' component={Login} />
                 <RedirectRoute exact path='/signup' component={Signup} />
                 <RedirectRoute exact path='/forgot-password' component={ForgotPassword} />
-                <ProtectedRoute exact path='/reset-password/:token' component={ResetPassword} />
+                <Route exact path='/reset-password/:token' component={ResetPassword} />
             </Switch>
         </Router>
     );

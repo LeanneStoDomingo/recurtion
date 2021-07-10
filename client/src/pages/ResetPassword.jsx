@@ -1,6 +1,9 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router'
+import Input from '../components/Input'
+import Button from '../components/Button'
+import Name from '../components/Name'
 
 export const ResetPassword = () => {
     const { token } = useParams()
@@ -9,14 +12,6 @@ export const ResetPassword = () => {
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-
-    const updatePassword1 = (e) => {
-        setPassword1(e.target.value)
-    }
-
-    const updatePassword2 = (e) => {
-        setPassword2(e.target.value)
-    }
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -38,20 +33,17 @@ export const ResetPassword = () => {
 
 
     return (
-        <form onSubmit={onSubmit}>
-            <div>
-                <label>New Password</label>
-                <input type="password" onChange={updatePassword1} value={password1} />
+        <div className='bg-purple-600 min-h-screen flex flex-col items-center mobile-height'>
+            <Name className='my-16' />
+            <div className='bg-purple-50 rounded-2xl shadow-lg p-5 mb-16'>
+                <form onSubmit={onSubmit} className='flex flex-col'>
+                    <h2 className='text-center text-xl font-semibold text-purple-900'>Reset Password</h2>
+                    <Input label='New Password' type='password' update={setPassword1} value={password1} className='mt-5' />
+                    <Input label='Retype Password' type='password' update={setPassword2} value={password2} className='mt-3' />
+                    <Button text='Reset Password' type='submit' className='ml-auto mt-5' />
+                    <div>{errorMessage}</div>
+                </form>
             </div>
-
-            <div>
-                <label>Retype Password</label>
-                <input type="password" onChange={updatePassword2} value={password2} />
-            </div>
-
-            <button type="submit">Reset Password</button>
-
-            <div>{errorMessage}</div>
-        </form>
+        </div>
     )
 }
