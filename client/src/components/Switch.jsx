@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Switch as TSwitch } from '@headlessui/react'
 
-const Switch = ({ toggle, setToggle }) => {
+export const Switch = ({ toggle, setToggle }) => {
     const [enabled, setEnabled] = useState(false)
 
     useEffect(() => {
@@ -33,5 +33,3 @@ const Switch = ({ toggle, setToggle }) => {
         </TSwitch>
     )
 }
-
-export default Switch

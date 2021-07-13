@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Notion = () => {
+export const Notion = () => {
     return (
         <div className='w-24 h-24'>
             <svg viewBox="0 0 381 398" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,5 +10,3 @@ const Notion = () => {
         </div>
     )
 }
-
-export default Notion

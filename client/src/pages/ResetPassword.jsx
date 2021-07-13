@@ -1,9 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import Name from '../components/Name'
+import { Input, Button, Name } from '../components'
 
 export const ResetPassword = () => {
     const { token } = useParams()

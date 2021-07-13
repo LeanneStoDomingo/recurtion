@@ -1,9 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import ChevronLeft from '../icons/ChevronLeft'
-import Name from '../components/Name'
+import { Input, Button, Name } from '../components'
+import { ChevronLeft } from '../icons'
 
 export const ForgotPassword = () => {
     const [email, setEmail] = useState('')

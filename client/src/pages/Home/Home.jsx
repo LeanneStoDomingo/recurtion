@@ -1,8 +1,5 @@
 import React from 'react'
-import Hero from './Hero'
-import ActionButtons from './ActionButtons'
-import FAQs from './FAQs'
-import DetailLinks from './DetailLinks'
+import { Hero, ActionButtons, FAQs, DetailLinks } from '.'
 
 export const Home = () => {
     return (

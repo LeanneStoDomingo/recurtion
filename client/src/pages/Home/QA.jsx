@@ -1,9 +1,8 @@
 import React from 'react'
 import { Disclosure } from '@headlessui/react'
-import ChevronUp from '../../icons/ChevronUp'
-import ChevronDown from '../../icons/ChevronDown'
+import { ChevronUp, ChevronDown } from '../../icons'
 
-const QA = ({ open, question, answer }) => {
+export const QA = ({ open, question, answer }) => {
     return (
         <>
             <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
@@ -17,5 +16,3 @@ const QA = ({ open, question, answer }) => {
         </>
     )
 }
-
-export default QA

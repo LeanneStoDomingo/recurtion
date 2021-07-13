@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { TokenContext } from '../utils'
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import Button from '../components/Button'
-import Input from '../components/Input'
-import Name from '../components/Name'
+import { Input, Button, Name } from '../components'
 
 export const Login = () => {
     const { setToken, config } = useContext(TokenContext)

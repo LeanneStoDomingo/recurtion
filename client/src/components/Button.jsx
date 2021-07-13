@@ -21,7 +21,7 @@ const classNameSizes = {
     'small-right': 'pr-2 pl-4'
 }
 
-const Button = ({
+export const Button = ({
     text,
     icon,
     to,
@@ -63,5 +63,3 @@ const Button = ({
         </button>
     )
 }
-
-export default Button

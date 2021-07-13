@@ -1,11 +1,10 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import Button from '../../components/Button'
-import Switch from '../../components/Switch'
+import { Button, Switch } from '../../components'
 import { TokenContext, useAuth } from '../../utils'
-import Labels from './Labels'
+import { Labels } from '.'
 
-const Settings = ({ onClose }) => {
+export const Settings = ({ onClose }) => {
     const { config } = useContext(TokenContext)
     const { checkExp } = useAuth()
 
@@ -61,5 +60,3 @@ const Settings = ({ onClose }) => {
         </div>
     )
 }
-
-export default Settings

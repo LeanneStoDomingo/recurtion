@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import Input from '../../components/Input'
+import { Input } from '../../components'
 import { TokenContext, useAuth } from '../../utils'
 
-const Labels = ({ onSave, toggle, ...props }) => {
+export const Labels = ({ onSave, toggle, ...props }) => {
     const { config } = useContext(TokenContext)
     const { checkExp } = useAuth()
 
@@ -57,5 +57,3 @@ const Labels = ({ onSave, toggle, ...props }) => {
         </form>
     )
 }
-
-export default Labels

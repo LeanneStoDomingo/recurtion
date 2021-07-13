@@ -1,9 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import Name from '../components/Name'
+import { Input, Button, Name } from '../components'
 
 export const Signup = () => {
     const [email, setEmail] = useState('')

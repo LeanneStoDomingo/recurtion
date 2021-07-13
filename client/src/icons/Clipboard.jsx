@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Clipboard = () => {
+export const Clipboard = () => {
     return (
         <svg
             data-darkreader-inline-fill=""
@@ -20,5 +20,3 @@ const Clipboard = () => {
         </svg>
     )
 }
-
-export default Clipboard

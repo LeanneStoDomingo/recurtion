@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from '../../components/Button'
-import ChevronLeft from '../../icons/ChevronLeft'
-import Labels from './Labels'
+import { Button } from '../../components'
+import { ChevronLeft } from '../../icons'
+import { Labels } from '.'
 
-const SetupOne = ({ onBack, onNext }) => {
+export const SetupThree = ({ onBack, onNext }) => {
 
     return (
         <div className='bg-purple-50 rounded-2xl shadow-md p-5 m-5'>
@@ -23,5 +23,3 @@ const SetupOne = ({ onBack, onNext }) => {
         </div>
     )
 }
-
-export default SetupOne

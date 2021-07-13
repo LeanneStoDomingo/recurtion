@@ -1,9 +1,8 @@
 import React from 'react'
-import Button from '../../components/Button'
-import ChevronLeft from '../../icons/ChevronLeft'
-import ChevronRight from '../../icons/ChevronRight'
+import { Button } from '../../components'
+import { ChevronLeft, ChevronRight } from '../../icons'
 
-const SetupOne = ({ onBack, onNext }) => {
+export const SetupOne = ({ onBack, onNext }) => {
 
     const onClick = () => {
         window.open('https://www.notion.so/510ec0f4e4864a69a8f5158ab606ad3f?v=e97c4236f9f2485c97bd3d73d0d33d01', '_blank', 'noopener noreferrer')
@@ -29,5 +28,3 @@ const SetupOne = ({ onBack, onNext }) => {
         </div>
     )
 }
-
-export default SetupOne

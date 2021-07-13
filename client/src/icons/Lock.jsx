@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Lock = () => {
+export const Lock = () => {
     return (
         <svg
             data-darkreader-inline-fill=""
@@ -20,5 +20,3 @@ const Lock = () => {
         </svg>
     )
 }
-
-export default Lock

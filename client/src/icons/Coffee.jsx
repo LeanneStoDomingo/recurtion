@@ -1,8 +1,6 @@
 import React from 'react'
 
-/* <img src="https://www.buymeacoffee.com/favicon.ico" alt="buy me a coffee" /> */
-
-const Coffee = () => {
+export const Coffee = () => {
     return (
         <svg
             role="img"
@@ -18,5 +16,3 @@ const Coffee = () => {
 
     )
 }
-
-export default Coffee

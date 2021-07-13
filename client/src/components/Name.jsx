@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Name = ({ className }) => {
-
+export const Name = ({ className }) => {
     return (
         <Link className={`text-center ${className}`} to='/'>
             <h1 className='text-5xl text-white'>Recurtion</h1>
@@ -10,5 +9,3 @@ const Name = ({ className }) => {
         </Link>
     )
 }
-
-export default Name

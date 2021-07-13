@@ -1,10 +1,8 @@
 import React from 'react'
-import Arrows from '../../icons/Arrows'
-import Plus from '../../icons/Plus'
-import Notion from '../../icons/Notion'
-import Name from '../../components/Name'
+import { Arrows, Plus, Notion } from '../../icons'
+import { Name } from '../../components'
 
-const Hero = () => {
+export const Hero = () => {
     return (
         <div className='flex flex-col items-center text-white w-full mt-16'>
             <Name />
@@ -19,5 +17,3 @@ const Hero = () => {
         </div>
     )
 }
-
-export default Hero

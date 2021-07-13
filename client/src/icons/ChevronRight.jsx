@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ChevronRight = () => {
+export const ChevronRight = () => {
     return (
         <svg
             className='mt-px'
@@ -18,5 +18,3 @@ const ChevronRight = () => {
         </svg>
     )
 }
-
-export default ChevronRight

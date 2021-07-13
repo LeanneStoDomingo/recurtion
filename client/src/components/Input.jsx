@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = ({ label, type, update, value, className, placeholder, ...props }) => {
+export const Input = ({ label, type, update, value, className, placeholder, ...props }) => {
 
     const onChange = (e) => {
         update(e.target.value)
@@ -19,5 +19,3 @@ const Input = ({ label, type, update, value, className, placeholder, ...props })
         </div>
     )
 }
-
-export default Input

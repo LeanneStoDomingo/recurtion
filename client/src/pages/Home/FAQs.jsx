@@ -1,8 +1,8 @@
 import React from 'react'
 import { Disclosure } from '@headlessui/react'
-import QA from './QA'
+import { QA } from '.'
 
-const FAQs = () => {
+export const FAQs = () => {
     return (
         <div className="w-full px-4 my-8">
             <div className="w-full max-w-md p-2 mx-auto bg-white rounded-2xl shadow-lg">
@@ -37,5 +37,3 @@ const FAQs = () => {
         </div>
     )
 }
-
-export default FAQs

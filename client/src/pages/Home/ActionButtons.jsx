@@ -1,7 +1,7 @@
 import React from 'react'
-import Button from '../../components/Button'
+import { Button } from '../../components'
 
-const ActionButtons = () => {
+export const ActionButtons = () => {
     return (
         <div className='flex flex-col items-center bg-white mx-auto my-8 shadow-lg rounded-2xl py-4 px-8'>
             <h2 className='text-purple-900'>Try it out!</h2>
@@ -12,5 +12,3 @@ const ActionButtons = () => {
         </div>
     )
 }
-
-export default ActionButtons

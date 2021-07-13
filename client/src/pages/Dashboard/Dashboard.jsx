@@ -2,13 +2,9 @@ import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
 import { TokenContext, useAuth } from '../../utils'
-import Button from '../../components/Button'
-import Cog from '../../icons/Cog'
-import Pencil from '../../icons/Pencil'
-import SetupOne from './SetupOne'
-import SetupTwo from './SetupTwo'
-import SetupThree from './SetupThree'
-import Settings from './Settings'
+import { Button } from '../../components'
+import { Cog, Pencil } from '../../icons'
+import { SetupOne, SetupTwo, SetupThree, Settings } from '.'
 
 export const Dashboard = () => {
     const history = useHistory()

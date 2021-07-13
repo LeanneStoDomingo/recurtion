@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
-import Button from '../../components/Button'
-import ChevronLeft from '../../icons/ChevronLeft'
-import ChevronRight from '../../icons/ChevronRight'
+import { Button } from '../../components'
+import { ChevronLeft, ChevronRight } from '../../icons'
 import { TokenContext, useAuth } from '../../utils'
 
-const SetupOne = ({ onBack, onNext }) => {
+export const SetupTwo = ({ onBack, onNext }) => {
     const { token } = useContext(TokenContext)
     const { loading, isAuth } = useAuth()
 
@@ -35,5 +34,3 @@ const SetupOne = ({ onBack, onNext }) => {
         </div>
     )
 }
-
-export default SetupOne

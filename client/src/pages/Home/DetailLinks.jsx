@@ -1,11 +1,8 @@
 import React from 'react'
-import Github from '../../icons/Github'
-import Lock from '../../icons/Lock'
-import Clipboard from '../../icons/Clipboard'
-import Coffee from '../../icons/Coffee'
-import Button from '../../components/Button'
+import { Github, Lock, Clipboard, Coffee } from '../../icons'
+import { Button } from '../../components'
 
-const DetailLinks = () => {
+export const DetailLinks = () => {
     return (
         <div className='px-5 text-white grid sm:grid-cols-2 w-full max-w-md items-center mt-4 mb-16'>
             <Button href='https://github.com/LeanneStoDomingo/recurtion' text='GitHub' icon={<Github />} color='noneLight' />
@@ -15,5 +12,3 @@ const DetailLinks = () => {
         </div>
     )
 }
-
-export default DetailLinks

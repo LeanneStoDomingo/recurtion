@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Cog = () => {
+export const Cog = () => {
     return (
         <svg
             className='mt-px'
@@ -18,5 +18,3 @@ const Cog = () => {
         </svg>
     )
 }
-
-export default Cog

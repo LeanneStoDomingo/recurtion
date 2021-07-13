@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Pencil = () => {
+export const Pencil = () => {
     return (
         <svg
             className="mt-px"
@@ -19,5 +19,3 @@ const Pencil = () => {
         </svg>
     )
 }
-
-export default Pencil
