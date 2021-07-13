@@ -27,7 +27,7 @@ export const Dashboard = () => {
             setErrorMessage('Token(s) aren\'t valid')
         }
         setToken('')
-        history.push('/')
+        history.push('/login')
     }
 
     const onSetup = () => {
@@ -67,7 +67,7 @@ export const Dashboard = () => {
 
     return (
         <>
-            <div className='flex justify-between pt-8 max-w-lg mx-auto'>
+            <div className='flex justify-between pt-6 max-w-lg mx-auto px-3'>
                 <h1>Recurtion<sup className='text-base text-purple-700'>beta</sup></h1>
                 <Button text='Logout' onClick={onLogout} />
             </div>
@@ -96,9 +96,9 @@ export const Dashboard = () => {
 
 
             <div className='bg-red-50'>
-                <div className='max-w-lg mx-auto px-5'>
-                    <h2 className='text-red-900 pt-5'>Danger Zone</h2>
-                    <Button text='Delete Account' onClick={onDelete} color='danger' className='my-3' />
+                <div className='max-w-lg mx-auto p-5'>
+                    <h2 className='text-red-900'>Danger Zone</h2>
+                    <Button text='Delete Account' onClick={onDelete} color='danger' className='mt-3' />
                 </div>
             </div>
         </>
