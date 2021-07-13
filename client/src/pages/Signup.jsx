@@ -30,7 +30,7 @@ export const Signup = () => {
             <Name className='my-16' />
             <div className='bg-purple-50 rounded-2xl shadow-lg p-5 mx-7 mb-16'>
                 <form onSubmit={onSubmit} className='flex flex-col'>
-                    <h2 className='text-center text-xl font-semibold text-purple-900 mb-3'>Sign Up</h2>
+                    <h2 className='text-center text-purple-900 mb-3'>Sign Up</h2>
                     <div className='text-center'>Already have an account? <Link to='/login' className='text-purple-700 focus-visible:outline-black hover:underline'>Log In</Link></div>
                     <Input label='Email' type='email' update={setEmail} value={email} className='mt-5' />
                     <Input label='Password' type='password' update={setPassword1} value={password1} className='mt-3' />
