@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Switch as TSwitch } from '@headlessui/react'
 
-const Switch = ({ onToggle, firstState }) => {
+const Switch = ({ toggle, setToggle }) => {
     const [enabled, setEnabled] = useState(false)
 
     useEffect(() => {
-        setEnabled(firstState)
-    }, [firstState])
+        setEnabled(toggle)
+    }, [toggle])
 
     useEffect(() => {
-        onToggle(enabled)
-    }, [enabled, onToggle])
+        setToggle(enabled)
+    }, [enabled, setToggle])
 
     return (
         <TSwitch

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Input from '../../components/Input'
 import { TokenContext, useAuth } from '../../utils'
 
-const Labels = ({ onSave, ...props }) => {
+const Labels = ({ onSave, toggle, ...props }) => {
     const { config } = useContext(TokenContext)
     const { checkExp } = useAuth()
 
@@ -30,7 +30,8 @@ const Labels = ({ onSave, ...props }) => {
             checkbox,
             date,
             interval: recurInterval,
-            invalid: 'Invalid format'
+            invalid: 'Invalid format',
+            toggle
         }
 
         const check = await checkExp()

@@ -11,20 +11,7 @@ const Settings = ({ onClose }) => {
 
     const [workspaceName, setWorkspaceName] = useState('')
     const [workspaceIcon, setWorkspaceIcon] = useState('')
-    const [firstToggle, setFirstToggle] = useState(false)
-
-    const onToggle = async (toggle) => {
-        const check = await checkExp()
-        if (check) {
-            const { data } = await axios.post('http://localhost:5000/toggle-integration', { toggle }, config)
-            if (!data.ok) {
-
-            }
-            // if (!data.ok) return setErrorMessage(data.message || 'Couldn\'t reach server')
-        } else {
-            // setErrorMessage('Token(s) aren\'t valid')
-        }
-    }
+    const [toggle, setToggle] = useState(false)
 
     const onRevoke = async () => {
         const check = await checkExp()
@@ -50,7 +37,7 @@ const Settings = ({ onClose }) => {
 
             setWorkspaceName(data.workspaceName)
             setWorkspaceIcon(data.workspaceIcon)
-            setFirstToggle(data.recurIntegration)
+            setToggle(data.recurIntegration)
         })()
     }, [config, /* setErrorMessage */])
 
@@ -62,11 +49,11 @@ const Settings = ({ onClose }) => {
             </div>
             <div className='flex items-center'>
                 <h3 className='text-lg mr-3'>Turn Integration On/Off: </h3>
-                <Switch onToggle={onToggle} firstState={firstToggle} />
+                <Switch setToggle={setToggle} toggle={toggle} />
             </div>
             <Button onClick={onRevoke} text='Revoke Notion Authorization' color='secondary' className='self-start' />
 
-            <Labels onSave={onClose} />
+            <Labels onSave={onClose} toggle={toggle} />
             <div className='flex flex-row-reverse justify-between'>
                 <Button text='Save' form='labels-form' type='submit' />
                 <Button text='Cancel' color='secondary' onClick={onClose} />
