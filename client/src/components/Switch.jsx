@@ -12,13 +12,12 @@ const Switch = ({ onToggle, firstState }) => {
         onToggle(enabled)
     }, [enabled, onToggle])
 
-    // TODO: change styling
     return (
         <TSwitch
             checked={enabled}
             onChange={setEnabled}
             className={`
-                ${enabled ? 'bg-blue-600' : 'bg-gray-200'} 
+                ${enabled ? 'bg-purple-600' : 'bg-gray-200'} 
                 relative inline-flex items-center h-6 rounded-full w-11 
                 transition-colors ease-in-out
             `}

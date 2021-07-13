@@ -5,7 +5,8 @@ const classNameColors = {
     primary: 'bg-purple-600 text-purple-50 shadow-sm hover:shadow-md hover:bg-purple-700 focus-visible:ring focus-visible:ring-purple-400 focus-visible:ring-opacity-75',
     secondary: 'bg-purple-100 text-purple-700 border border-purple-200 shadow-sm hover:shadow hover:bg-purple-200 hover:border-purple-300 focus-visible:ring focus-visible:ring-purple-400 focus-visible:ring-opacity-75',
     noneDark: 'text-purple-700 focus-visible:outline-black hover:underline',
-    noneLight: 'text-purple-50 focus-visible:outline-white hover:underline'
+    noneLight: 'text-purple-50 focus-visible:outline-white hover:underline',
+    danger: 'bg-red-600 text-red-100 shadow-sm hover:shadow-md hover:bg-red-700 focus-visible:ring focus-visible:ring-red-400 focus-visible:ring-opacity-75'
 }
 
 const classNameIconSizes = {
@@ -14,11 +15,25 @@ const classNameIconSizes = {
 }
 
 const classNameSizes = {
-    medium: 'px-4',
-    small: 'pl-2 pr-4'
+    'medium-left': 'px-4',
+    'medium-right': 'px-4',
+    'small-left': 'pl-2 pr-4',
+    'small-right': 'pr-2 pl-4'
 }
 
-const Button = ({ text, icon, to, href, onClick, className = '', color = 'primary', size = 'medium', ...props }) => {
+const Button = ({
+    text,
+    icon,
+    to,
+    href,
+    onClick,
+    className = '',
+    color = 'primary',
+    size = 'medium',
+    iconPosition = 'left',
+    ...props
+}) => {
+
     const history = useHistory()
 
     const onClickLink = () => {
@@ -33,14 +48,18 @@ const Button = ({ text, icon, to, href, onClick, className = '', color = 'primar
         <button
             {...props}
             onClick={to ? onClickLink : href ? onClickHref : onClick}
-            className={`flex ${classNameColors[color]} items-center justify-center align-middle font-medium rounded py-2 ${classNameSizes[size]} text-center ${className}`}
+            className={`flex ${classNameColors[color]} items-center justify-center align-middle font-medium rounded py-2 ${classNameSizes[`${size}-${iconPosition}`]} text-center ${className}`}
         >
-            <div className={icon ? `${classNameIconSizes[size]} mr-3` : ''}>
+            {iconPosition === 'left' ? <div className={icon ? `${classNameIconSizes[size]} mr-3` : ''}>
                 {icon}
-            </div>
+            </div> : null}
             <div>
                 {text}
             </div>
+            {iconPosition === 'right' ?
+                <div className={icon ? `${classNameIconSizes[size]} ml-3` : ''}>
+                    {icon}
+                </div> : null}
         </button>
     )
 }
