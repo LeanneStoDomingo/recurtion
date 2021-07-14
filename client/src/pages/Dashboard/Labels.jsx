@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axios } from '../../utils'
 import React, { useContext, useEffect, useState } from 'react'
 import { Input } from '../../components'
 import { TokenContext, useAuth } from '../../utils'
@@ -13,7 +13,7 @@ export const Labels = ({ onSave, toggle, ...props }) => {
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get('http://localhost:5000/dashboard-info', config)
+            const { data } = await axios.get('/dashboard-info', config)
 
             // if (!data.ok) return setErrorMessage(data.message)
 
@@ -37,7 +37,7 @@ export const Labels = ({ onSave, toggle, ...props }) => {
         const check = await checkExp()
 
         if (check) {
-            const { data } = await axios.post('http://localhost:5000/set-configuration', body, config)
+            const { data } = await axios.post('/set-configuration', body, config)
             if (data) {
 
             }

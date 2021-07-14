@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axios } from '../utils'
 import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router'
 import { Input, Button, Name } from '../components'
@@ -16,7 +16,7 @@ export const ResetPassword = () => {
 
         let data
         try {
-            const res = await axios.post('http://localhost:5000/password-confirmation', { token, password1, password2 })
+            const res = await axios.post('/password-confirmation', { token, password1, password2 })
             data = res.data
         } catch (err) {
             return setErrorMessage(err.message)

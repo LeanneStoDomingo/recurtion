@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
-import axios from 'axios'
+import { axios } from '.'
 import { TokenContext } from '.'
 
 export const useAuth = () => {
@@ -11,7 +11,7 @@ export const useAuth = () => {
 
     const checkAuth = useCallback(async () => {
         try {
-            const { data } = await axios.get('http://localhost:5000/verify-auth', config)
+            const { data } = await axios.get('/verify-auth', config)
 
             if (!data.ok) return false
 
@@ -29,7 +29,7 @@ export const useAuth = () => {
 
             if (Date.now() < exp * 1000) return true
 
-            const { data } = await axios.get('http://localhost:5000/refresh-tokens', config)
+            const { data } = await axios.get('/refresh-tokens', config)
 
             if (!data.ok) return false
 

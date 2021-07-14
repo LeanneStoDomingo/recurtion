@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
+import { axios } from '../utils'
 import { TokenContext } from '../utils'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Input, Button, Name } from '../components'
@@ -19,7 +19,7 @@ export const Login = () => {
 
         let data
         try {
-            const res = await axios.post('http://localhost:5000/login', { email, password }, config)
+            const res = await axios.post('/login', { email, password }, config)
             data = res.data
         } catch (err) {
             return setErrorMessage(err.message)

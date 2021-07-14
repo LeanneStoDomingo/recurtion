@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axios } from '../../utils'
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Switch } from '../../components'
 import { TokenContext, useAuth } from '../../utils'
@@ -15,7 +15,7 @@ export const Settings = ({ onClose }) => {
     const onRevoke = async () => {
         const check = await checkExp()
         if (check) {
-            const { data } = await axios.get('http://localhost:5000/revoke-notion', config)
+            const { data } = await axios.get('/revoke-notion', config)
 
             if (!data.ok) {
 
@@ -29,7 +29,7 @@ export const Settings = ({ onClose }) => {
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get('http://localhost:5000/dashboard-info', config)
+            const { data } = await axios.get('/dashboard-info', config)
             // checkbox, date, interval, invalid, workspaceName, workspaceIcon, recurIntegration
 
             // if (!data.ok) return setErrorMessage(data.message)

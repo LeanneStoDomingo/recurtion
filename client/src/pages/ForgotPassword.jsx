@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axios } from '../utils'
 import React, { useState } from 'react'
 import { Input, Button, Name } from '../components'
 import { ChevronLeft } from '../icons'
@@ -12,7 +12,7 @@ export const ForgotPassword = () => {
 
         let data
         try {
-            const res = await axios.post('http://localhost:5000/forgot-password', { email })
+            const res = await axios.post('/forgot-password', { email })
             data = res.data
         } catch (err) {
             return setMessage(err.message)

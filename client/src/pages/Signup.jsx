@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axios } from '../utils'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Input, Button, Name } from '../components'
@@ -14,7 +14,7 @@ export const Signup = () => {
 
         let data
         try {
-            const res = await axios.post('http://localhost:5000/signup', { email, password1, password2 })
+            const res = await axios.post('/signup', { email, password1, password2 })
             data = res.data
         } catch (err) {
             return setMessage(err.message)

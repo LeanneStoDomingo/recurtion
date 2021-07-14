@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { axios } from '../../utils'
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
 import { TokenContext, useAuth } from '../../utils'
@@ -18,7 +18,7 @@ export const Dashboard = () => {
     const onLogout = async () => {
         const check = await checkExp()
         if (check) {
-            await axios.get('http://localhost:5000/logout', config)
+            await axios.get('/logout', config)
         } else {
             setErrorMessage('Token(s) aren\'t valid')
         }
@@ -53,7 +53,7 @@ export const Dashboard = () => {
     const onDelete = async () => {
         const check = await checkExp()
         if (check) {
-            await axios.get('http://localhost:5000/delete-account', config)
+            await axios.get('/delete-account', config)
             setToken('')
             history.push('/')
         } else {
